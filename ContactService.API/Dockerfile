@@ -11,8 +11,8 @@ COPY . .
 WORKDIR /src/ContactService.API
 RUN dotnet build -c Release -o /app
 
-RUN chmod +x entrypoint.sh
-CMD /bin/bash entrypoint.sh
+#RUN chmod +x entrypoint.sh
+#CMD /bin/bash entrypoint.sh
 
 FROM build AS publish
 RUN dotnet publish -c Release -o /app
