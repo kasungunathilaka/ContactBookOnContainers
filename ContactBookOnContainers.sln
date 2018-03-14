@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2DE72401-DE6E-47CA-B6CD-B3A4E8B4F9FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{52781F2D-208C-4806-94F6-1D64DE2A862A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContactService", "ContactService", "{D611F12C-455C-407C-A475-131C04D775D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactService.API", "ContactService.API\ContactService.API.csproj", "{91EB1463-1AD2-49D2-A340-6287C2A3ABDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{06C6D4A9-6475-475D-B1E2-D369297D6297}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{423531A3-86BE-48F4-8CC5-2B8DA0F4340B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91EB1463-1AD2-49D2-A340-6287C2A3ABDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91EB1463-1AD2-49D2-A340-6287C2A3ABDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91EB1463-1AD2-49D2-A340-6287C2A3ABDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91EB1463-1AD2-49D2-A340-6287C2A3ABDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{423531A3-86BE-48F4-8CC5-2B8DA0F4340B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{423531A3-86BE-48F4-8CC5-2B8DA0F4340B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{423531A3-86BE-48F4-8CC5-2B8DA0F4340B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{423531A3-86BE-48F4-8CC5-2B8DA0F4340B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{52781F2D-208C-4806-94F6-1D64DE2A862A} = {2DE72401-DE6E-47CA-B6CD-B3A4E8B4F9FE}
+		{D611F12C-455C-407C-A475-131C04D775D5} = {52781F2D-208C-4806-94F6-1D64DE2A862A}
+		{91EB1463-1AD2-49D2-A340-6287C2A3ABDB} = {D611F12C-455C-407C-A475-131C04D775D5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {998BD7B0-65C5-42F0-92CB-27AC48FEF934}
+	EndGlobalSection
+EndGlobal
