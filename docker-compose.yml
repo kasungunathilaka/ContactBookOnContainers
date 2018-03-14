@@ -7,10 +7,18 @@ services:
       context: .
       dockerfile: ContactService.API/Dockerfile
     depends_on:
-          - sql.data
+      - sql.data
 
   sql.data:
     image: microsoft/mssql-server-linux:2017-latest
     environment:
-            SA_PASSWORD: "Qweasd123#"
-            ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Qweasd123#"
+      ACCEPT_EULA: "Y"
+
+  #webspa:
+  #  image: contactbook/webspa:${TAG:-latest}
+  #  build:
+  #    context: .
+  #    dockerfile: WebSPA/Dockerfile
+
+

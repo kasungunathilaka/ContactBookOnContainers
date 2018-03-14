@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="contacts">Phone Book</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="contacts/addContact">Create Contact</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-2">
+    <tag-input class="form-control-sm" (onAdd)="onItemAdded()" (onRemove)="onItemRemoved()" [(ngModel)]="searchTag" id="searchTag" theme='dark' name="searchTag" [secondaryPlaceholder]="'Search in Contacts'" [maxItems]='1'>
+      <tag-input-dropdown [autocompleteItems]=names>
+      </tag-input-dropdown>
+    </tag-input>
+  </div>
+</nav>
+
+<div>
+  <router-outlet></router-outlet>
+</div>
+

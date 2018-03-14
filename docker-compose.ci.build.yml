@@ -9,3 +9,6 @@ services:
     working_dir: /src
 
     command: /bin/bash -c "dotnet restore ./ContactBookOnContainers.sln && dotnet publish ./ContactBookOnContainers.sln -c Release -o ./obj/Docker/publish"
+
+    #command: /bin/bash -c "pushd ./WebSPA && npm rebuild && popd && dotnet publish ./ContactBookOnContainers-ContactBookOnContainers.sln -c Release -o ./obj/Docker/publish"
+
