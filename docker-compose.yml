@@ -22,12 +22,12 @@ services:
   #    dockerfile: WebSPA/Dockerfile
 
 
-  webspa:
-    image: contactbook/webspa:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: WebSPA/Dockerfile
-    depends_on:
-      - contactservice.api
-    ports:
-      - "5102:80"
+  #webspa:
+  #  image: contactbook/webspa:${TAG:-latest}
+  #  build:
+  #    context: .
+  #    dockerfile: WebSPA/Dockerfile
+  #  depends_on:
+  #    - contactservice.api
+  #  ports:
+  #    - "5102:80"
