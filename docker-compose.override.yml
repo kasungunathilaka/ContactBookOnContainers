@@ -16,7 +16,7 @@ services:
 
   #webspa:
   #  environment:
-  #    - ASPNETCORE_ENVIRONMENT=Development
-  #  ports:
+  #   - ASPNETCORE_ENVIRONMENT=Development
+  # ports:
   #   - "5102:80"
 

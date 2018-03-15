@@ -31,7 +31,7 @@ namespace ContactService.API.Infrastructure
                 .HasForeignKey<Address>(b => b.ContactDetailsId);
         }
 
-        public class CatalogContextDesignFactory : IDesignTimeDbContextFactory<ContactBookContext>
+        public class ContactBookContextDesignFactory : IDesignTimeDbContextFactory<ContactBookContext>
         {
             public ContactBookContext CreateDbContext(string[] args)
             {

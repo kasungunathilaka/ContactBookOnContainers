@@ -28,10 +28,10 @@ FROM node:8.9-alpine as builder
 
 WORKDIR /app
 RUN npm i -g @angular/cli
-COPY package.json package.json
-RUN npm install --silent
+COPY WebSPA/package.json ./package.json
+RUN npm install 
 
-COPY . .
+COPY WebSPA .
 
 # --------------------------------------
 # Build PROD & BETA
@@ -47,6 +47,6 @@ WORKDIR /app
 COPY --from=builder /app/dist .
 
 RUN  rm -rf /usr/share/nginx/html/* && \
-	 cp -R /app/* /usr/share/nginx/html/  
+	 cp -R /app/src/* /usr/share/nginx/html/  
 
-COPY Docker.nginx.default.conf /etc/nginx/conf.d/default.conf
+COPY WebSPA/Docker.nginx.default.conf /etc/nginx/conf.d/default.conf

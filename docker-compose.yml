@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+  #webspa:
+  #  image: contactbook/webspa:${TAG:-latest}
+  #  build:
+  #    context: .
+  #    dockerfile: WebSPA/Dockerfile
+  #  depends_on:
+  #    - contactservice.api
+
   contactservice.api:
     image: contactbook/contactservice.api:${TAG:-latest}
     build:
@@ -22,12 +30,3 @@ services:
   #    dockerfile: WebSPA/Dockerfile
 
 
-  #webspa:
-  #  image: contactbook/webspa:${TAG:-latest}
-  #  build:
-  #    context: .
-  #    dockerfile: WebSPA/Dockerfile
-  #  depends_on:
-  #    - contactservice.api
-  #  ports:
-  #    - "5102:80"
