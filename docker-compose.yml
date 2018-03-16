@@ -1,14 +1,6 @@
 version: '3'
 
 services:
-  #webspa:
-  #  image: contactbook/webspa:${TAG:-latest}
-  #  build:
-  #    context: .
-  #    dockerfile: WebSPA/Dockerfile
-  #  depends_on:
-  #    - contactservice.api
-
   contactservice.api:
     image: contactbook/contactservice.api:${TAG:-latest}
     build:
@@ -23,10 +15,10 @@ services:
       SA_PASSWORD: "Qweasd123#"
       ACCEPT_EULA: "Y"
 
-  #webspa:
-  #  image: contactbook/webspa:${TAG:-latest}
-  #  build:
-  #    context: .
-  #    dockerfile: WebSPA/Dockerfile
+  webspa:
+    image: contactbook/webspa:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: WebSPA/Dockerfile
 
 

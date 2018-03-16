@@ -5,18 +5,18 @@ services:
     environment:
      - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "5101:80"
+      - "5103:80"
 
   sql.data:
-      environment:
-        - SA_PASSWORD=Qweasd123#
-        - ACCEPT_EULA=Y
-      ports:
-        - "5433:1433"
+    environment:
+      - SA_PASSWORD=Qweasd123#
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
 
-  #webspa:
-  #  environment:
-  #   - ASPNETCORE_ENVIRONMENT=Development
-  # ports:
-  #   - "5102:80"
+  webspa:
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+     - "5102:80"
 

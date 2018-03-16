@@ -55,13 +55,10 @@ namespace ContactService.API
 
             services.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
                 options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
                 {
                     Title = "ContactBookOnContainers - ContactService HTTP API",
                     Version = "v1",
-                    Description = "The ContactService HTTP API.",
-                    TermsOfService = "Terms Of Service"
                 });
             });
 
@@ -84,18 +81,12 @@ namespace ContactService.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ContactBookContext context)
         {
-            var pathBase = Configuration["PATH_BASE"];
-            if (!string.IsNullOrEmpty(pathBase))
-            {
-                app.UsePathBase(pathBase);
-            }
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            context.Database.Migrate();
+            //context.Database.Migrate();
 
             app.UseCors("CorsPolicy");
 
@@ -104,7 +95,7 @@ namespace ContactService.API
             app.UseSwagger()
               .UseSwaggerUI(c =>
               {
-                  c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "ContactService.API V1");
+                  c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContactService.API V1");
               });
         }
     }

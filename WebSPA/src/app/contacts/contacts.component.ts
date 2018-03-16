@@ -20,7 +20,7 @@ export class ContactsComponent implements OnInit {
 
   onItemAdded() {
     this._router.navigate(['contacts/searchContact/', this.searchTag[0].value]);
-    console.log(this.searchTag[0].value);
+    //console.log(this.searchTag[0].value);
   }
 
   onItemRemoved() {
