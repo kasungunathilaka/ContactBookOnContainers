@@ -5,20 +5,33 @@ services:
     image: contactbook/contactservice.api:${TAG:-latest}
     build:
       context: .
-      dockerfile: ContactService.API/Dockerfile
+      dockerfile: src/Services/ContactService/ContactService.API/Dockerfile
+    ports:
+      - "5103:80"
     depends_on:
       - sql.data
 
   sql.data:
     image: microsoft/mssql-server-linux:2017-latest
     environment:
-      SA_PASSWORD: "Qweasd123#"
+      SA_PASSWORD: "Qweasd123@"
       ACCEPT_EULA: "Y"
+    ports:
+      - "5433:1433"
 
-  webspa:
-    image: contactbook/webspa:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: WebSPA/Dockerfile
+  #webspa:
+  #  image: contactbook/webspa:${TAG:-latest}
+  #  build:
+  #   context: .
+  #   dockerfile: WebSPA/Dockerfile
+  #  ports:
+  #   - "5102:80"
 
+  #orderservice.api:
+  #  image: contactbook/orderservice.api:${TAG:-latest}
+  #  build:
+  #   context: .
+  #   dockerfile: src/Services/OrderService/OrderService.API/Dockerfile
+  #  ports:
+  #    - "5104:80"
 

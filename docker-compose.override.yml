@@ -9,14 +9,20 @@ services:
 
   sql.data:
     environment:
-      - SA_PASSWORD=Qweasd123#
+      - SA_PASSWORD=Qweasd123@
       - ACCEPT_EULA=Y
     ports:
       - "5433:1433"
 
-  webspa:
-    environment:
-     - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-     - "5102:80"
+  #webspa:
+  #  environment:
+  #  - ASPNETCORE_ENVIRONMENT=Development
+  #  ports:
+  #   - "5102:80"
+
+  #orderservice.api:
+  #  environment:
+  #    - ASPNETCORE_ENVIRONMENT=Development
+  #  ports:
+  #   - "5104:80"
 
