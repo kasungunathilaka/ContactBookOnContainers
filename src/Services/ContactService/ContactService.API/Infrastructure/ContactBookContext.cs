@@ -10,9 +10,9 @@ namespace ContactService.API.Infrastructure
 {
     public class ContactBookContext : DbContext
     {
-        public ContactBookContext(DbContextOptions<ContactBookContext> options)
-           : base(options)
-        { }
+        public ContactBookContext(DbContextOptions<ContactBookContext> options) : base(options)
+        {
+        }
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ContactDetails> ContactDetails { get; set; }
@@ -36,7 +36,7 @@ namespace ContactService.API.Infrastructure
             public ContactBookContext CreateDbContext(string[] args)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<ContactBookContext>()
-                    .UseSqlServer("Server=tcp:10.0.75.1,5433;Initial Catalog=Services.ContactsDb;User Id=sa;Password=Qweasd123@");
+                    .UseSqlServer("Server=tcp:10.0.75.1,5434;Initial Catalog=ContactsDb;User Id=sa;Password=Qweasd123");
 
                 return new ContactBookContext(optionsBuilder.Options);
             }

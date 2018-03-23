@@ -24,7 +24,7 @@ namespace ContactService.API.ContactProviders
             List<ContactViewModel> contactDetails = new List<ContactViewModel>();
             List<Customer> customers = await _dbConext.Customers.OrderBy(c => c.FirstName).ToListAsync();
 
-            if (customers.Count > 0)
+            if (customers.Count > 0 && customers != null)
             {
                 foreach (var customer in customers)
                 {

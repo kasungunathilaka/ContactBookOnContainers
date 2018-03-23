@@ -9,10 +9,10 @@ services:
 
   sql.data:
     environment:
-      - SA_PASSWORD=Qweasd123@
+      - SA_PASSWORD=Qweasd123
       - ACCEPT_EULA=Y
     ports:
-      - "5433:1433"
+      - "5434:1433"
 
   #webspa:
   #  environment:
