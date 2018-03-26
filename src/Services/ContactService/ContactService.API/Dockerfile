@@ -26,7 +26,7 @@ RUN dotnet publish -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-COPY src/Services/ContactService/ContactService.API/entrypoint.sh .
+#COPY src/Services/ContactService/ContactService.API/entrypoint.sh .
 #RUN chmod +x entrypoint.sh
 #CMD /bin/bash entrypoint.sh
 ENTRYPOINT ["dotnet", "ContactService.API.dll"]

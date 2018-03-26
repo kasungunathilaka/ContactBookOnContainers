@@ -2,11 +2,13 @@
 
 namespace OrderService.API.Models
 {
-    public class OrderItem: IAuditable
+    public class OrderItem : IAuditable
     {
-        public Guid OrderId { get; set; }
+        public Guid OrderItemId { get; set; }
         public int Quantity { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public Guid OrderId { get; set; }
+        public Order Order { get; set; }
+        public Guid ProductId { get; set; }
+        public Product Product { get; set; }
     }
 }

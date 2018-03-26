@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace OrderService.API.Models
 {
-    public class ProductCategory
+    public class ProductCategory : IAuditable
     {
         public Guid ProductCategoryId { get; set; }
         public string ProductCategoryName { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public Guid ProductId { get; set; }
+        public Product Product { get; set; }
     }
 }

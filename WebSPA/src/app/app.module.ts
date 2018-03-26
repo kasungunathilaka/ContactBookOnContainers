@@ -3,9 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
+import { ConfigurationService } from './shared/services/configurations.service';
+import { ToastrServices } from './shared/services/toastr.service';
 
 import { AppComponent } from './app.component';
-
 
 @NgModule({
   declarations: [
@@ -15,9 +18,13 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    ConfigurationService,
+    ToastrServices
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <br>
+    <h5>Create a New Product</h5>
+  </div>
+  <hr>
+  <div>
+    <form #contactForm="ngForm" (ngSubmit)="onAddButtonClick(contactForm)">
+      <div class="form-group">
+        <label class="col-form-label col-form-label-sm">Product Name</label>
+        <input type="text" class="form-control form-control-sm" id="productName" name="productName" [(ngModel)]="productName" placeholder="Product Name" required>
+      </div>
+      <div class="form-group">
+        <label class="col-form-label col-form-label-sm">Product Category</label>
+        <input type="text" class="form-control form-control-sm" id="productCategory" name="productCategory" [(ngModel)]="productCategory" placeholder="Product Category">
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label col-form-label-sm">Description</label>
+        <input type="text" class="form-control  form-control-sm" id="street" name="description" [(ngModel)]="description" placeholder="Product Description">
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label col-form-label-sm">Unit Price</label>
+        <input type="text" class="form-control form-control-sm" id="price" name="price" [(ngModel)]="price" placeholder="$$">
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="isAvailable">
+        <label class="form-check-label" for="isAvailable">Is Available</label>
+      </div>
+
+      <button type="submit" style="float: right" class="btn btn-primary btn-sm">Create Product</button>
+    </form>
+  </div>
+</div>
+
+

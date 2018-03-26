@@ -1,0 +1,19 @@
+﻿using OrderService.API.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace OrderService.API.Providers
+{
+    public interface IOrdersService
+    {
+        Task CreateCustomer(CustomerViewModel addedCustomer);
+        Task CreateProduct(ProductViewModel addedProduct);
+        Task CreateOrder(string customerId, OrderViewModel addedOrder);
+        Task AddProductsToOrder(string orderId, OrderItemViewModel addedProduct);
+        Task RemoveProductsFromOrder(string orderId, string orderItemId);
+        Task UpdateOrder(string orderId, OrderViewModel editedOrder);
+        Task DeleteOrder(string orderId);
+    }
+}

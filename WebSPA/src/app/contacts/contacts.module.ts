@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ToastrModule } from 'ngx-toastr';
 import { ContactsRoutingModule } from './contacts-routing.module';
 import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { TagInputModule } from 'ngx-chips';
@@ -15,9 +14,6 @@ import { ContactDetailsComponent } from './contact-details/contact-details.compo
 import { SearchContactComponent } from './search-contact/search-contact.component';
 
 import { ContactService } from '../shared/services/contact.service';
-import { ConfigurationService } from '../shared/services/configurations.service';
-import { ToastrServices } from '../shared/services/toastr.service';
-
 
 @NgModule({
   declarations: [
@@ -36,13 +32,10 @@ import { ToastrServices } from '../shared/services/toastr.service';
     MatInputModule,
     MatAutocompleteModule,
     TagInputModule,
-    CommonModule,
-    ToastrModule.forRoot()
+    CommonModule
   ],
   providers: [
-    ContactService,
-    ConfigurationService,
-    ToastrServices
+    ContactService
   ]
 })
 export class ContactsModule { }

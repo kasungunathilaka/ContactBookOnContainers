@@ -27,11 +27,12 @@ services:
   #  ports:
   #  - "5102:80"
 
-  #orderservice.api:
-  #  image: contactbook/orderservice.api:${TAG:-latest}
-  #  build:
-  #   context: .
-  #   dockerfile: src/Services/OrderService/OrderService.API/Dockerfile
-  #  ports:
-  #    - "5104:80"
-
+  orderservice.api:
+    image: contactbook/orderservice.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Services/OrderService/OrderService.API/Dockerfile
+    ports:
+      - "5104:80"
+    depends_on:
+      - sql.data

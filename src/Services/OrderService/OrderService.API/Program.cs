@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using OrderService.API.Infrastructure;
 
 namespace OrderService.API
 {
@@ -14,12 +15,27 @@ namespace OrderService.API
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                .MigrateDbContext<OrderContext>()
+                .RunWhenHealthy();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseApplicationInsights()
+                .UseHealthChecks("/hc")
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .ConfigureAppConfiguration((builderContext, config) =>
+                {
+                    config.AddEnvironmentVariables();
+                })
+                .ConfigureLogging((hostingContext, builder) =>
+                {
+                    builder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    builder.AddConsole();
+                    builder.AddDebug();
+                })
                 .Build();
     }
 }
