@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 
 @Injectable()
-export class ConfigurationService {
+export class ContactsConfigurationService {
     public host_port = 'localhost:5103';
     public Server = 'http://' + this.host_port + '/';
     public ApiUrl = 'api/v1/';

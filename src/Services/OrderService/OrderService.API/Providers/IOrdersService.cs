@@ -15,5 +15,7 @@ namespace OrderService.API.Providers
         Task RemoveProductsFromOrder(string orderId, string orderItemId);
         Task UpdateOrder(string orderId, OrderViewModel editedOrder);
         Task DeleteOrder(string orderId);
+        Task<List<OrderViewModel>> GetAllOrders();
+        Task<OrderViewModel> GetOrderById(string orderId);
     }
 }

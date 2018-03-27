@@ -11,6 +11,8 @@ namespace OrderService.API.ViewModels
         public DateTime OrderDate { get; set; }
         public bool IsCompleted { get; set; }
         public Guid CustomerId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public ICollection<OrderItemViewModel> OrderItems { get; set; }
     }
 

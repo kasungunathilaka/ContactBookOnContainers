@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
-import { ConfigurationService } from './shared/services/configurations.service';
 import { ToastrServices } from './shared/services/toastr.service';
 
 import { AppComponent } from './app.component';
@@ -22,7 +21,6 @@ import { AppComponent } from './app.component';
     ToastrModule.forRoot()
   ],
   providers: [
-    ConfigurationService,
     ToastrServices
   ],
   bootstrap: [AppComponent]

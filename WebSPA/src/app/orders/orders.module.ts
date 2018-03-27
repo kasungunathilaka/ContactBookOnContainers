@@ -11,12 +11,19 @@ import { IndexComponent } from './index/index.component';
 import { CreateCustomerComponent } from './create-customer/create-customer.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 
+import { OrdersConfigurationService } from '../shared/services/orders-configurations.service';
+import { OrderService } from '../shared/services/order.service';
+import { OrderDetailsComponent } from './order-details/order-details.component';
+import { CreateOrderComponent } from './create-order/create-order.component';
+
 @NgModule({
   declarations: [
     OrdersComponent,
     IndexComponent,
     CreateCustomerComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    OrderDetailsComponent,
+    CreateOrderComponent
   ],
   imports: [
     OrdersRoutingModule,
@@ -29,7 +36,8 @@ import { CreateProductComponent } from './create-product/create-product.componen
     CommonModule
   ],
   providers: [
-
+    OrdersConfigurationService,
+    OrderService
   ]
 })
 export class OrdersModule { }

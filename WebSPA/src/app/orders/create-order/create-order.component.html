@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <br>
+    <h5>Create a New Order</h5>
+  </div>
+  <hr>
+  <div>
+    <form #contactForm="ngForm" (ngSubmit)="onAddButtonClick(contactForm)">
+      <div class="form-group row">
+        <div class="col">
+          <label class="col-form-label col-form-label-sm">First Name</label>
+          <input type="text" class="form-control form-control-sm" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="First name" required>
+        </div>
+        <div class="col">
+          <label class="col-form-label col-form-label-sm">Last Name</label>
+          <input type="text" class="form-control form-control-sm" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Last name" required>
+        </div>
+      </div>
+
+      <button type="submit" style="float: right" class="btn btn-primary btn-sm">Create Order</button>
+    </form>
+  </div>
+</div>
+
+

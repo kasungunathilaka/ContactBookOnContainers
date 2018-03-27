@@ -8,16 +8,16 @@ services:
       dockerfile: src/Services/ContactService/ContactService.API/Dockerfile
     ports:
       - "5103:80"
-    depends_on:
-      - sql.data
+  #  depends_on:
+  #   - sql.data
 
-  sql.data:
-    image: microsoft/mssql-server-linux:2017-latest
-    environment:
-      SA_PASSWORD: "Qweasd123"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "5434:1433"
+  #sql.data:
+  #  image: microsoft/mssql-server-linux:2017-latest
+  # environment:
+  #   SA_PASSWORD: "Qweasd123"
+  #   ACCEPT_EULA: "Y"
+  #  ports:
+  #    - "5434:1433"
 
   #webspa:
   #  image: contactbook/webspa:${TAG:-latest}
@@ -34,5 +34,5 @@ services:
       dockerfile: src/Services/OrderService/OrderService.API/Dockerfile
     ports:
       - "5104:80"
-    depends_on:
-      - sql.data
+  #  depends_on:
+  #    - sql.data

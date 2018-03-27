@@ -28,7 +28,7 @@ namespace ContactService.API.Controllers
                 List<ContactViewModel> contacts = new List<ContactViewModel>();
                 contacts = await _service.GetAllContacts();
 
-                if (contacts.Count > 0)
+                if (contacts != null)
                 {
                     return Ok(contacts);
                 }
@@ -49,7 +49,7 @@ namespace ContactService.API.Controllers
                 List<string> contactNames = new List<string>();
                 contactNames = await _service.GetAllContactNames();
 
-                if (contactNames.Count > 0)
+                if (contactNames != null)
                 {
                     return Ok(contactNames);
                 }
@@ -140,7 +140,6 @@ namespace ContactService.API.Controllers
             try
             {
                 await _service.EditContact(id, editedContact);
-                //GetContactById(id);
                 return Ok("Contact Edited.");
             }
             catch (Exception ex)

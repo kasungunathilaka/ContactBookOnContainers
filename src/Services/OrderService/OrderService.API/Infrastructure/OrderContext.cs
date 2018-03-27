@@ -4,6 +4,7 @@ using OrderService.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OrderService.API.Infrastructure
@@ -64,10 +65,10 @@ namespace OrderService.API.Infrastructure
             base.OnModelCreating(modelBuilder);
         }
 
-        public override int SaveChanges()
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             ApplyAuditInformation();
-            return base.SaveChanges();
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         private void ApplyAuditInformation()

@@ -1,3 +1,29 @@
-<p>
-  index works!
-</p>
+<div class="container-fluid">
+  <div class="page-header">
+    <br>
+    <h5>Order</h5>
+  </div>
+  <hr>
+  <div class="card">
+    <div class="card-block">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let order of orders">
+          <div class="row">
+            <div class="col-md-1">
+              <a class="pull-left" href="#">
+                <img src="../../../assets/order.png" class="img-circle" style="height: 50px;border-radius: 25px">
+              </a>
+            </div>
+            <div class="col-md-10 ">
+              <span class="pull-left">{{ order.firstName }} {{ order.lastName }}</span>
+            </div>
+            <div class="col-md-1">
+              <button type="button" style="float: right" class="btn btn-secondary btn-sm" (click)="getOrderDetails(order.orderId)">></button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+

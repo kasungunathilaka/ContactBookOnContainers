@@ -14,6 +14,7 @@ import { ContactDetailsComponent } from './contact-details/contact-details.compo
 import { SearchContactComponent } from './search-contact/search-contact.component';
 
 import { ContactService } from '../shared/services/contact.service';
+import { ContactsConfigurationService } from '../shared/services/contacts-configurations.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ContactService } from '../shared/services/contact.service';
     CommonModule
   ],
   providers: [
+    ContactsConfigurationService,
     ContactService
   ]
 })

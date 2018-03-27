@@ -5,14 +5,14 @@ import { Http, Response, Headers, RequestOptions, ResponseContentType } from '@a
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ContactDetails } from '../models/contact-details';
-import { ConfigurationService } from './configurations.service';
+import { ContactsConfigurationService } from './contacts-configurations.service';
 
 @Injectable()
 export class ContactService {
     headers: Headers;
     options: RequestOptions;
     private contactsUrl: string;
-    constructor(private http: Http, private _configuration: ConfigurationService) {
+    constructor(private http: Http, private _configuration: ContactsConfigurationService) {
         this.contactsUrl = _configuration.ServerWithApiUrl + 'contacts';
         this.headers = new Headers({
             'Content-Type': 'application/json',
