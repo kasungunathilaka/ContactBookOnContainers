@@ -11,7 +11,7 @@ using System;
 namespace OrderService.API.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20180326134607_initial")]
+    [Migration("20180328091347_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ namespace OrderService.API.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("OrderService.API.Models.ContactDetails", b =>

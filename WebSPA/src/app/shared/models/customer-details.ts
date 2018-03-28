@@ -8,11 +8,11 @@ export class CustomerDetails {
   mobilePhone: string;
   homePhone: string;
   facebookId: string;
-  Addresses: Address[];
+  addresses: Address[];
 }
 
 export class Address {
-  AddressId: string;
+  addressId: string;
   street: string;
   city: string;
   province: string;

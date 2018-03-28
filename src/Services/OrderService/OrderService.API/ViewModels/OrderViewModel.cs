@@ -13,6 +13,13 @@ namespace OrderService.API.ViewModels
         public Guid CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Gender { get; set; }
+        public Guid ContactDetailsId { get; set; }
+        public string Email { get; set; }
+        public string MobilePhone { get; set; }
+        public string HomePhone { get; set; }
+        public string FacebookId { get; set; }
+        public ICollection<AddressViewModel> Addresses { get; set; }
         public ICollection<OrderItemViewModel> OrderItems { get; set; }
     }
 

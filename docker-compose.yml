@@ -13,19 +13,19 @@ services:
 
   #sql.data:
   #  image: microsoft/mssql-server-linux:2017-latest
-  # environment:
+  #  environment:
   #   SA_PASSWORD: "Qweasd123"
   #   ACCEPT_EULA: "Y"
-  #  ports:
-  #    - "5434:1433"
+  # ports:
+  #   - "5434:1433"
 
   #webspa:
   #  image: contactbook/webspa:${TAG:-latest}
   # build:
-  #  context: .
-  #  dockerfile: WebSPA/Dockerfile
+  #   context: .
+  #   dockerfile: WebSPA/Dockerfile
   #  ports:
-  #  - "5102:80"
+  #   - "5102:80"
 
   orderservice.api:
     image: contactbook/orderservice.api:${TAG:-latest}

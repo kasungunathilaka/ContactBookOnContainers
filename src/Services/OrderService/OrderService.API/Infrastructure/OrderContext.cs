@@ -17,7 +17,7 @@ namespace OrderService.API.Infrastructure
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ContactDetails> ContactDetails { get; set; }
-        public DbSet<Address> Address { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }       
@@ -65,10 +65,10 @@ namespace OrderService.API.Infrastructure
             base.OnModelCreating(modelBuilder);
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override int SaveChanges()
         {
             ApplyAuditInformation();
-            return base.SaveChangesAsync(cancellationToken);
+            return base.SaveChanges();
         }
 
         private void ApplyAuditInformation()

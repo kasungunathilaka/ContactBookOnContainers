@@ -116,5 +116,89 @@ namespace OrderService.API.Controllers
             return BadRequest("Failed to create new order.");
         }
 
+        [HttpGet("names")]
+        public async Task<IActionResult> GetAllCustomerNames()
+        {
+            try
+            {
+                List<string> contactNames = new List<string>();
+                contactNames = await _service.GetAllCustomerNames();
+
+                if (contactNames != null)
+                {
+                    return Ok(contactNames);
+                }
+                return NotFound("Could not found any contact.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while getting contacts: {ex.Message}");
+            }
+            return BadRequest("Could not found any contacts.");
+        }
+
+        [HttpGet("productCategories")]
+        public async Task<IActionResult> GetAllProductCategories()
+        {
+            try
+            {
+                List<string> productCategories = new List<string>();
+                productCategories = await _service.GetAllProductCategories();
+
+                if (productCategories != null)
+                {
+                    return Ok(productCategories);
+                }
+                return NotFound("Could not found any Product Categories.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while getting product categories: {ex.Message}");
+            }
+            return BadRequest("Could not found any product categories.");
+        }
+
+        [HttpGet("products")]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            try
+            {
+                List<string> products = new List<string>();
+                products = await _service.GetAllProducts();
+
+                if (products != null)
+                {
+                    return Ok(products);
+                }
+                return NotFound("Could not found any Products.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while getting products: {ex.Message}");
+            }
+            return BadRequest("Could not found any products.");
+        }
+
+        [HttpGet("search/{tag}")]
+        public async Task<IActionResult> SearchCustomerByName(string tag)
+        {
+            try
+            {
+                CustomerViewModel customer = await _service.SearchCustomerByName(tag);
+
+                if (customer != null)
+                {
+                    return Ok(customer);
+                }
+                return NotFound("Could not found any customer.");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while getting customer: {ex.Message}");
+            }
+            return BadRequest("Could not found any customer.");
+        }
+
     }
 }

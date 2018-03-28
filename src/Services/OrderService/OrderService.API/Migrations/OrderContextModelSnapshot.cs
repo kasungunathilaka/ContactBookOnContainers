@@ -43,7 +43,7 @@ namespace OrderService.API.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("OrderService.API.Models.ContactDetails", b =>

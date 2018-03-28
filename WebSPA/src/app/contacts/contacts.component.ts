@@ -33,9 +33,9 @@ export class ContactsComponent implements OnInit {
         this.names = names;
         //console.log(this.names);
       },
-        error => {
-          console.log(error);
-        });
+      error => {
+        console.log(error);
+      });
   }
 
 }

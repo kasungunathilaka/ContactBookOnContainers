@@ -6,18 +6,122 @@
   <hr>
   <div>
     <form #contactForm="ngForm" (ngSubmit)="onAddButtonClick(contactForm)">
-      <div class="form-group row">
-        <div class="col">
-          <label class="col-form-label col-form-label-sm">First Name</label>
-          <input type="text" class="form-control form-control-sm" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="First name" required>
+      <div>
+        <div class="form-group">
+          <div class="col-sm">Customer :</div>
+          <div class="col-sm">
+            <tag-input class="form-control-sm" [onlyFromAutocomplete]="true" (onAdd)="onItemAdded()" (onRemove)="onItemRemoved()" [(ngModel)]="searchTag" id="searchTag" theme='dark' name="searchTag" [secondaryPlaceholder]="'Search in Customers'" [maxItems]='1'>
+              <tag-input-dropdown [autocompleteItems]=names>
+              </tag-input-dropdown>
+            </tag-input>
+          </div>
         </div>
-        <div class="col">
-          <label class="col-form-label col-form-label-sm">Last Name</label>
-          <input type="text" class="form-control form-control-sm" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Last name" required>
+
+        <div class="col" *ngIf="customer">
+          <div class="row-sm">Personal Details:</div>
+          <div class="form-group row">
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">First Name</label>
+              <input type="text" class="form-control form-control-sm" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="First name" readonly>
+            </div>
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Last Name</label>
+              <input type="text" class="form-control form-control-sm" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Last name" readonly>
+            </div>
+          </div>
+
+          <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-form-label-sm col-sm-2 pt-0">Gender</legend>
+              <div class="col-sm-10">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input form-control-sm" type="radio" name="gender" [(ngModel)]="gender" id="genderM" value="Male" readonly>
+                  <label class="form-check-label col-form-label-sm" for="genderM">
+                    Male
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input form-control-sm" type="radio" name="gender" [(ngModel)]="gender" id="genderF" value="Female" readonly>
+                  <label class="form-check-label col-form-label-sm" for="gendeFM">
+                    Female
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="row-sm">Contact Details:</div>
+          <div class="form-group row">
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Email</label>
+              <input type="email" class="form-control form-control-sm" id="email" name="email" [(ngModel)]="email" placeholder="name@example.com" readonly>
+            </div>
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Facebook Id</label>
+              <input type="text" class="form-control form-control-sm" id="facebookId" name="facebookId" [(ngModel)]="facebookId" placeholder="Facebook Id" readonly>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Mobile Phone</label>
+              <input type="text" class="form-control form-control-sm" id="mobilePhone" name="mobilePhone" [(ngModel)]="mobilePhone" placeholder="xxxxxxxxxx" readonly>
+            </div>
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Home Phone</label>
+              <input type="text" class="form-control form-control-sm" id="homePhone" name="homePhone" [(ngModel)]="homePhone" placeholder="xxxxxxxxxx" readonly>
+            </div>
+          </div>
+
+          <div class="row-sm">Billing Address Details:</div>
+          <div class="form-row" *ngFor="let address of addresses">
+            <div class="form-group col-md-4">
+              <label class="col-form-label col-form-label-sm">Street</label>
+              <input type="text" class="form-control  form-control-sm" id="address.street" name="address.street" [(ngModel)]="address.street" placeholder="1234 Main St." readonly>
+            </div>
+            <div class="form-group col-md-3">
+              <label class="col-form-label col-form-label-sm">City</label>
+              <input type="text" class="form-control  form-control-sm" id="address.city" name="address.city" [(ngModel)]="address.city" placeholder="City" readonly>
+            </div>
+            <div class="form-group col-md-3">
+              <label class="col-form-label col-form-label-sm">Province</label>
+              <input type="text" class="form-control  form-control-sm" id="address.province" name="address.province" [(ngModel)]="address.province" placeholder="Province" readonly>
+            </div>
+            <div class="form-group col-md-2">
+              <label class="col-form-label col-form-label-sm">Zip</label>
+              <input type="text" class="form-control  form-control-sm" id="address.zipcode" name="address.zipcode" [(ngModel)]="address.zipCode" placeholder="Zip" readonly>
+            </div>
+          </div>
         </div>
       </div>
-
-      <button type="submit" style="float: right" class="btn btn-primary btn-sm">Create Order</button>
+      <div>
+        <div class="col-sm">Add Order Items :</div>
+        <div class="form-group col">
+          <div>
+            <label class="col-form-label col-form-label-sm">Product Category</label>
+            <select id="productCategory" class="form-control form-control-sm" name="productCategory" [(ngModel)]="productCategory" (ngModelChange)="onProductCategorySelected($event)">
+              <option selected>Choose...</option>
+              <option *ngFor="let category of productCategory" [ngValue]="category">{{ category }}</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label class="col-form-label col-form-label-sm">Product</label>
+              <select id="products" class="form-control form-control-sm" name="products" [(ngModel)]="products">
+                <option selected>Choose...</option>
+                <option *ngFor="let product of products" [ngValue]="product">{{ product }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-form-label col-form-label-sm">Quantity</label>
+              <input type="text" class="form-control  form-control-sm" id="quantity" name="quantity" [(ngModel)]="quantity">
+            </div>
+          </div>
+        </div>      
+      </div>
+      <div>
+        <button type="submit" style="float: right" class="btn btn-primary btn-sm">Create Order</button>
+      </div>    
     </form>
   </div>
 </div>

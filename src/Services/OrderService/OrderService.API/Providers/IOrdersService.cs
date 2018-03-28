@@ -17,5 +17,9 @@ namespace OrderService.API.Providers
         Task DeleteOrder(string orderId);
         Task<List<OrderViewModel>> GetAllOrders();
         Task<OrderViewModel> GetOrderById(string orderId);
+        Task<List<string>> GetAllCustomerNames();
+        Task<CustomerViewModel> SearchCustomerByName(string name);
+        Task<List<string>> GetAllProducts();
+        Task<List<string>> GetAllProductCategories();
     }
 }

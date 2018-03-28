@@ -42,7 +42,7 @@ namespace OrderService.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Address",
+                name: "Addresses",
                 columns: table => new
                 {
                     AddressId = table.Column<Guid>(nullable: false),
@@ -56,9 +56,9 @@ namespace OrderService.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Address", x => x.AddressId);
+                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
                     table.ForeignKey(
-                        name: "FK_Address_Customers_CustomerId",
+                        name: "FK_Addresses_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
@@ -161,8 +161,8 @@ namespace OrderService.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Address_CustomerId",
-                table: "Address",
+                name: "IX_Addresses_CustomerId",
+                table: "Addresses",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
@@ -197,7 +197,7 @@ namespace OrderService.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Address");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "ContactDetails");
