@@ -76,13 +76,13 @@ namespace OrderService.API.Providers
             ProductCategory productCategory = new ProductCategory
             {
                 ProductCategoryId = _productCatagoryGuid,
-                ProductId = _productGuid,
                 ProductCategoryName = addedProduct.ProductCategoryName
             };
 
             Product product = new Product
             {
                 ProductId = _productGuid,
+                ProductCategoryId = _productCatagoryGuid,
                 ProductName = addedProduct.ProductName,
                 Description = addedProduct.Description,
                 Price = addedProduct.Price,
@@ -166,7 +166,7 @@ namespace OrderService.API.Providers
                         foreach (var item in orderItems)
                         {
                             Product product = await _dbConext.Products.FirstOrDefaultAsync(p => p.ProductId.Equals(item.ProductId));
-                            ProductCategory productCategory = await _dbConext.ProductCategories.FirstOrDefaultAsync(pc => pc.ProductId.Equals(item.ProductId));
+                            ProductCategory productCategory = await _dbConext.ProductCategories.FirstOrDefaultAsync(pc => pc.ProductCategoryId.Equals(product.ProductCategoryId));
 
                             OrderItemViewModel orderItemVM = new OrderItemViewModel
                             {
@@ -177,7 +177,7 @@ namespace OrderService.API.Providers
                                 Description = product.Description,
                                 Price = product.Price,
                                 IsAvailable = product.IsAvailable,
-                                ProductCategoryId = productCategory.ProductCategoryId,
+                                ProductCategoryId = product.ProductCategoryId,
                                 ProductCategoryName = productCategory.ProductCategoryName
                             };
                             orderItemsVM.Add(orderItemVM);
@@ -243,7 +243,7 @@ namespace OrderService.API.Providers
                     foreach (var item in orderItems)
                     {
                         Product product = await _dbConext.Products.FirstOrDefaultAsync(p => p.ProductId.Equals(item.ProductId));
-                        ProductCategory productCategory = await _dbConext.ProductCategories.FirstOrDefaultAsync(pc => pc.ProductId.Equals(item.ProductId));
+                        ProductCategory productCategory = await _dbConext.ProductCategories.FirstOrDefaultAsync(pc => pc.ProductCategoryId.Equals(product.ProductCategoryId));
 
                         OrderItemViewModel orderItemVM = new OrderItemViewModel
                         {
@@ -254,7 +254,7 @@ namespace OrderService.API.Providers
                             Description = product.Description,
                             Price = product.Price,
                             IsAvailable = product.IsAvailable,
-                            ProductCategoryId = productCategory.ProductCategoryId,
+                            ProductCategoryId = product.ProductCategoryId,
                             ProductCategoryName = productCategory.ProductCategoryName
                         };
                         orderItemsVM.Add(orderItemVM);
@@ -386,7 +386,29 @@ namespace OrderService.API.Providers
             }return null;
         }
 
-        public async Task<List<string>> GetAllProducts()
+        public async Task<ProductViewModel> GetProductByName(string productName)
+        {
+            Product product = await _dbConext.Products.FirstOrDefaultAsync(p => p.ProductName.Equals(productName));            
+
+            if (product != null)
+            {                 
+                ProductCategory productCategory = await _dbConext.ProductCategories.FirstOrDefaultAsync(c => c.ProductCategoryId.Equals(product.ProductCategoryId));
+                ProductViewModel productVM = new ProductViewModel
+                {
+                    ProductId = product.ProductId,
+                    ProductName = product.ProductName,
+                    Description = product.Description,
+                    IsAvailable = product.IsAvailable,
+                    Price = product.Price,
+                    ProductCategoryId = product.ProductCategoryId,
+                    ProductCategoryName = productCategory.ProductCategoryName
+                };
+                return productVM;
+            }
+            return null;
+        }
+
+        public async Task<List<string>> GetAllProductNames()
         {
             List<string> productNames = new List<string>();
             List<Product> products = await _dbConext.Products.ToListAsync();
@@ -405,23 +427,5 @@ namespace OrderService.API.Providers
             return null;
         }
 
-        public async Task<List<string>> GetAllProductCategories()
-        {
-            List<string> productCategoryNames = new List<string>();
-            List<ProductCategory> productCategories = await _dbConext.ProductCategories.ToListAsync();
-
-            if (productCategories.Count > 0)
-            {
-                foreach (var productCategory in productCategories)
-                {
-                    if (productCategory != null)
-                    {
-                        productCategoryNames.Add(productCategory.ProductCategoryName);
-                    }
-                }
-                return productCategoryNames;
-            }
-            return null;
-        }
     }
 }

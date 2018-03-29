@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import { OrdersConfigurationService } from './orders-configurations.service';
 import { CustomerDetails } from '../models/customer-details';
 import { OrderDetails } from '../models/order-details';
+import { ProductDetails } from '../models/product-details';
 
 @Injectable()
 export class OrderService {
@@ -54,6 +55,20 @@ export class OrderService {
     const url = `${this.ordersUrl}/search/${tag}`;
     return this.http.get(url)
       .map((res: Response) => <CustomerDetails>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  public GetProductByName(productName: string): Observable<ProductDetails> {
+    const url = `${this.ordersUrl}/product/${productName}`;
+    return this.http.get(url)
+      .map((res: Response) => <ProductDetails>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  public getAllProductNames(): Observable<string[]> {
+    const url = `${this.ordersUrl}/productNames`;
+    return this.http.get(url)
+      .map((res: Response) => <string[]>res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 

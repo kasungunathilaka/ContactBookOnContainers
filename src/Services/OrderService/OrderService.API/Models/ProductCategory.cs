@@ -9,7 +9,6 @@ namespace OrderService.API.Models
     {
         public Guid ProductCategoryId { get; set; }
         public string ProductCategoryName { get; set; }
-        public Guid ProductId { get; set; }
-        public Product Product { get; set; }
+        public ICollection<Product> Product { get; set; }
     }
 }

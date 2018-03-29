@@ -19,7 +19,7 @@ namespace OrderService.API.Providers
         Task<OrderViewModel> GetOrderById(string orderId);
         Task<List<string>> GetAllCustomerNames();
         Task<CustomerViewModel> SearchCustomerByName(string name);
-        Task<List<string>> GetAllProducts();
-        Task<List<string>> GetAllProductCategories();
+        Task<ProductViewModel> GetProductByName(string productName);
+        Task<List<string>> GetAllProductNames();
     }
 }

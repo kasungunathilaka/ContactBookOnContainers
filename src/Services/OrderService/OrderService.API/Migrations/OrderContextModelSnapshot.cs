@@ -155,9 +155,13 @@ namespace OrderService.API.Migrations
 
                     b.Property<int>("Price");
 
+                    b.Property<Guid>("ProductCategoryId");
+
                     b.Property<string>("ProductName");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("ProductCategoryId");
 
                     b.ToTable("Products");
                 });
@@ -173,12 +177,7 @@ namespace OrderService.API.Migrations
 
                     b.Property<string>("ProductCategoryName");
 
-                    b.Property<Guid>("ProductId");
-
                     b.HasKey("ProductCategoryId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
 
                     b.ToTable("ProductCategories");
                 });
@@ -220,11 +219,11 @@ namespace OrderService.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OrderService.API.Models.ProductCategory", b =>
+            modelBuilder.Entity("OrderService.API.Models.Product", b =>
                 {
-                    b.HasOne("OrderService.API.Models.Product", "Product")
-                        .WithOne("ProductCategory")
-                        .HasForeignKey("OrderService.API.Models.ProductCategory", "ProductId")
+                    b.HasOne("OrderService.API.Models.ProductCategory", "ProductCategory")
+                        .WithMany("Product")
+                        .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

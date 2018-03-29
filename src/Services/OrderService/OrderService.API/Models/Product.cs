@@ -12,6 +12,7 @@ namespace OrderService.API.Models
         public string Description { get; set; }
         public int Price { get; set; }
         public bool IsAvailable { get; set; }
+        public Guid ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public OrderItem OrderItem { get; set; }
     }

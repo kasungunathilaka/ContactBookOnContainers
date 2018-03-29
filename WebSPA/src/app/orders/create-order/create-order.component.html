@@ -94,34 +94,85 @@
           </div>
         </div>
       </div>
+      <hr />
       <div>
         <div class="col-sm">Add Order Items :</div>
         <div class="form-group col">
-          <div>
-            <label class="col-form-label col-form-label-sm">Product Category</label>
-            <select id="productCategory" class="form-control form-control-sm" name="productCategory" [(ngModel)]="productCategory" (ngModelChange)="onProductCategorySelected($event)">
-              <option selected>Choose...</option>
-              <option *ngFor="let category of productCategory" [ngValue]="category">{{ category }}</option>
-            </select>
-          </div>
           <div class="form-row">
-            <div class="form-group col-md-8">
+            <div class="form-group col-md-2">
               <label class="col-form-label col-form-label-sm">Product</label>
-              <select id="products" class="form-control form-control-sm" name="products" [(ngModel)]="products">
-                <option selected>Choose...</option>
-                <option *ngFor="let product of products" [ngValue]="product">{{ product }}</option>
+              <select id="productN" class="form-control form-control-sm" name="productN" [(ngModel)]="productN" (ngModelChange)="onProductSelected()">
+                <option selected>Choose Product...</option>
+                <option *ngFor="let productName of productNames">{{ productName }}</option>
               </select>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
+              <label class="col-form-label col-form-label-sm">Product Category</label>
+              <input type="text" class="form-control form-control-sm" id="productCategory" name="productCategory" [(ngModel)]="productCategory" placeholder="Product Category" readonly>
+            </div>
+            <div class="form-group col-md-2">
+              <label class="col-form-label col-form-label-sm">Description</label>
+              <input type="text" class="form-control form-control-sm" id="description" name="description" [(ngModel)]="description" placeholder="Description" readonly>
+            </div>
+            <div class="form-group col-md-2">
+              <label class="col-form-label col-form-label-sm">Unit Price</label>
+              <input type="text" class="form-control form-control-sm" id="unitPrice" name="unitPrice" [(ngModel)]="unitPrice" placeholder="Unit Price" readonly>
+            </div>
+            <div class="form-group col-md-2">
+              <label class="col-form-label col-form-label-sm">Availability</label>
+              <input type="text" class="form-control form-control-sm" id="availability" name="availability" [(ngModel)]="availability" placeholder="Availability" readonly>
+            </div>
+            <div class="form-group col-md-1">
               <label class="col-form-label col-form-label-sm">Quantity</label>
-              <input type="text" class="form-control  form-control-sm" id="quantity" name="quantity" [(ngModel)]="quantity">
+              <input type="text" class="form-control  form-control-sm" id="quantity" name="quantity" [(ngModel)]="quantity" placeholder="Quantity">
+            </div>
+            <div *ngIf="availability == 'In Stock' && customer && quantity > 0">
+              <label class="col-form-label col-form-label-sm"> `</label>
+              <button type="button" class="form-control  form-control-sm btn-sm btn-success" (click)="addOrderItems()">Add Items</button>
             </div>
           </div>
-        </div>      
-      </div>
+        </div>
+      </div>     
+      <hr />
+      <div class="col-sm">Order Item Details :</div>
       <div>
-        <button type="submit" style="float: right" class="btn btn-primary btn-sm">Create Order</button>
-      </div>    
+        <mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="productName">
+            <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+            <mat-cell *matCellDef="let orderItem"> {{ orderItem.productName }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="productCategory">
+            <mat-header-cell *matHeaderCellDef> Product Category </mat-header-cell>
+            <mat-cell *matCellDef="let orderItem"> {{ orderItem.productCategoryName }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let orderItem"> {{ orderItem.description }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Unit Price </mat-header-cell>
+            <mat-cell *matCellDef="let orderItem"> {{ orderItem.price }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="quantity">
+            <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+            <mat-cell *matCellDef="let orderItem"> {{ (orderItem.quantity != null ? orderItem.quantity : 0) }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+            <mat-cell *matCellDef="let orderItem"> {{ (orderItem.price != null && orderItem.quantity != null ? orderItem.price * orderItem.quantity : 0)}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+            <mat-cell *matCellDef="let orderItem"> <button type="button" class="form-control-sm btn-sm btn-danger" (click)="removeOrderItems(orderItem.orderItemId)">Remove Item</button> </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+      <hr />
+      <div>
+        <button *ngIf="orderItems.length > 0" type="submit" style="float: right" class="btn btn-primary btn-sm">Create Order</button>
+      </div>
     </form>
   </div>
 </div>

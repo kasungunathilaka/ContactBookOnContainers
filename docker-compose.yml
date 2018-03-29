@@ -12,8 +12,8 @@ services:
   #   - sql.data
 
   #sql.data:
-  #  image: microsoft/mssql-server-linux:2017-latest
-  #  environment:
+  # image: microsoft/mssql-server-linux:2017-latest
+  # environment:
   #   SA_PASSWORD: "Qweasd123"
   #   ACCEPT_EULA: "Y"
   # ports:
@@ -35,4 +35,4 @@ services:
     ports:
       - "5104:80"
   #  depends_on:
-  #    - sql.data
+  #   - sql.data

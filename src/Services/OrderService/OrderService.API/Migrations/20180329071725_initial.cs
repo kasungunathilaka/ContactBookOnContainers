@@ -25,20 +25,17 @@ namespace OrderService.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "ProductCategories",
                 columns: table => new
                 {
-                    ProductId = table.Column<Guid>(nullable: false),
+                    ProductCategoryId = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    IsAvailable = table.Column<bool>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
-                    Price = table.Column<int>(nullable: false),
-                    ProductName = table.Column<string>(nullable: true)
+                    ProductCategoryName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.ProductId);
+                    table.PrimaryKey("PK_ProductCategories", x => x.ProductCategoryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,23 +109,26 @@ namespace OrderService.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductCategories",
+                name: "Products",
                 columns: table => new
                 {
-                    ProductCategoryId = table.Column<Guid>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    IsAvailable = table.Column<bool>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
-                    ProductCategoryName = table.Column<string>(nullable: true),
-                    ProductId = table.Column<Guid>(nullable: false)
+                    Price = table.Column<int>(nullable: false),
+                    ProductCategoryId = table.Column<Guid>(nullable: false),
+                    ProductName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductCategories", x => x.ProductCategoryId);
+                    table.PrimaryKey("PK_Products", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_ProductCategories_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductId",
+                        name: "FK_Products_ProductCategories_ProductCategoryId",
+                        column: x => x.ProductCategoryId,
+                        principalTable: "ProductCategories",
+                        principalColumn: "ProductCategoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -188,10 +188,9 @@ namespace OrderService.API.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductCategories_ProductId",
-                table: "ProductCategories",
-                column: "ProductId",
-                unique: true);
+                name: "IX_Products_ProductCategoryId",
+                table: "Products",
+                column: "ProductCategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -206,9 +205,6 @@ namespace OrderService.API.Migrations
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
-                name: "ProductCategories");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -216,6 +212,9 @@ namespace OrderService.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "ProductCategories");
         }
     }
 }

@@ -137,38 +137,17 @@ namespace OrderService.API.Controllers
             return BadRequest("Could not found any contacts.");
         }
 
-        [HttpGet("productCategories")]
-        public async Task<IActionResult> GetAllProductCategories()
+        [HttpGet("productNames")]
+        public async Task<IActionResult> GetAllProductNames()
         {
             try
             {
-                List<string> productCategories = new List<string>();
-                productCategories = await _service.GetAllProductCategories();
+                List<string> productNames = new List<string>();
+                productNames = await _service.GetAllProductNames();
 
-                if (productCategories != null)
+                if (productNames != null)
                 {
-                    return Ok(productCategories);
-                }
-                return NotFound("Could not found any Product Categories.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"An exception occurred while getting product categories: {ex.Message}");
-            }
-            return BadRequest("Could not found any product categories.");
-        }
-
-        [HttpGet("products")]
-        public async Task<IActionResult> GetAllProducts()
-        {
-            try
-            {
-                List<string> products = new List<string>();
-                products = await _service.GetAllProducts();
-
-                if (products != null)
-                {
-                    return Ok(products);
+                    return Ok(productNames);
                 }
                 return NotFound("Could not found any Products.");
             }
@@ -177,6 +156,26 @@ namespace OrderService.API.Controllers
                 _logger.LogError($"An exception occurred while getting products: {ex.Message}");
             }
             return BadRequest("Could not found any products.");
+        }
+
+        [HttpGet("product/{productName}")]
+        public async Task<IActionResult> GetProductByName(string productName)
+        {
+            try
+            {
+                ProductViewModel product = await _service.GetProductByName(productName);
+
+                if (product != null)
+                {
+                    return Ok(product);
+                }
+                return NotFound("Could not found any Product.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while getting product: {ex.Message}");
+            }
+            return BadRequest("Could not found any product.");
         }
 
         [HttpGet("search/{tag}")]

@@ -1,10 +1,10 @@
+import { CustomerDetails } from "./customer-details";
+
 export class OrderDetails {
   orderId: string;
   orderDate: Date;
   isCompleted: boolean;
-  customerId: string;
-  firstName: string;
-  lastName: string;
+  customerDetails: CustomerDetails;
   orderItems: OrderItem[];
 }
 

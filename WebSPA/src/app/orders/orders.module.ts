@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { TagInputModule } from 'ngx-chips';
 import { OrdersRoutingModule } from './orders-routing.module';
+import { MatTableModule } from '@angular/material';
 
 import { OrdersComponent } from './orders.component';
 import { IndexComponent } from './index/index.component';
@@ -33,7 +34,8 @@ import { CreateOrderComponent } from './create-order/create-order.component';
     MatInputModule,
     MatAutocompleteModule,
     TagInputModule,
-    CommonModule
+    CommonModule,
+    MatTableModule
   ],
   providers: [
     OrdersConfigurationService,

@@ -40,10 +40,10 @@ namespace OrderService.API.Infrastructure
                .WithOne(b => b.Customer)
                .HasForeignKey(b => b.CustomerId);               
 
-            modelBuilder.Entity<Product>()
-               .HasOne(a => a.ProductCategory)
-               .WithOne(b => b.Product)
-               .HasForeignKey<ProductCategory>(b => b.ProductId);
+            modelBuilder.Entity<ProductCategory>()
+               .HasMany(a => a.Product)
+               .WithOne(b => b.ProductCategory)
+               .HasForeignKey(b => b.ProductCategoryId);
 
             modelBuilder.Entity<Order>()
                .HasMany(a => a.OrderItems)
