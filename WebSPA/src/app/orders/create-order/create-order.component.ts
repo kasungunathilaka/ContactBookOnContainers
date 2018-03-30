@@ -6,6 +6,8 @@ import { OrderItem, OrderDetails } from '../../shared/models/order-details';
 import { ProductDetails } from '../../shared/models/product-details';
 import { MatTableDataSource } from '@angular/material';
 import { UUID } from 'angular2-uuid';
+import { NgForm } from '@angular/forms';
+import { ToastrServices } from '../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-create-order',
@@ -30,6 +32,7 @@ export class CreateOrderComponent implements OnInit {
   city: string;
   province: string;
   zipCode: string;
+  isCompleted: boolean;
 
   products: ProductDetails[];
   productNames: string[];
@@ -47,7 +50,7 @@ export class CreateOrderComponent implements OnInit {
   displayedColumns = ['productName', 'productCategory', 'description', 'price', 'quantity', 'amount', 'delete'];
   dataSource = new MatTableDataSource<OrderItem>(this.orderItems);
 
-  constructor(private _orderService: OrderService, private _router: Router) { }
+  constructor(private _orderService: OrderService, private _router: Router, private _toastrService: ToastrServices) { }
 
   ngOnInit() {
     this.getAllCustomerNames();
@@ -153,11 +156,27 @@ export class CreateOrderComponent implements OnInit {
     //console.log(this.orderItems);
   }
 
-  onAddButtonClick() {
+  onAddButtonClick(orderForm: NgForm) {
     var addedOrder = new OrderDetails();
-    addedOrder.customerDetails = this.customer;
+    addedOrder.customer = this.customer;
     addedOrder.orderItems = this.orderItems;
-    console.log(addedOrder);
+    addedOrder.isCompleted = orderForm.controls['isCompleted'].value;
+
+    this._orderService.CreateOrder(addedOrder)
+      .subscribe(
+        result => {
+          //console.log(addedOrder);
+          this._toastrService.success('Order Added Successfully.', '');
+          this._router.navigate(['orders']);
+        },
+        error => {
+          console.log(error);
+          this._toastrService.error('Order Addition Failed.', 'Error');
+        });
+  }
+
+  onCreateCustomer() {
+    this._router.navigate(['orders/addCustomer']);
   }
 
 }

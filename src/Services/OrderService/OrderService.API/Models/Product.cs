@@ -14,6 +14,5 @@ namespace OrderService.API.Models
         public bool IsAvailable { get; set; }
         public Guid ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
-        public OrderItem OrderItem { get; set; }
     }
 }

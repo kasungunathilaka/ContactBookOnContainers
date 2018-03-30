@@ -82,6 +82,8 @@ namespace OrderService.API
             });
 
             services.AddTransient<IOrdersService, OrdersService>();
+            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IProductService, ProductService>();
 
             var container = new ContainerBuilder();
             container.Populate(services);

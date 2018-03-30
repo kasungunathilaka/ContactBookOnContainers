@@ -50,11 +50,6 @@ namespace OrderService.API.Infrastructure
                .WithOne(b => b.Order)
                .HasForeignKey(b => b.OrderId);
 
-            modelBuilder.Entity<OrderItem>()
-               .HasOne(a => a.Product)
-               .WithOne(b => b.OrderItem)
-               .HasForeignKey<OrderItem>(b => b.ProductId);
-
             // Create shadow properties
             foreach (var entityType in modelBuilder.Model.GetEntityTypes()
                 .Where(e => typeof(IAuditable).IsAssignableFrom(e.ClrType)))

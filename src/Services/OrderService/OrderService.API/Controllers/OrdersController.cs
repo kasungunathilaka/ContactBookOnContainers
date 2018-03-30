@@ -12,11 +12,15 @@ namespace OrderService.API.Controllers
     [Route("api/v1/[controller]")]
     public class OrdersController : Controller
     {
-        private IOrdersService _service;
+        private IOrdersService _orderService;
+        private IProductService _productService;
+        private ICustomerService _customerService;
         private ILogger<OrdersController> _logger;
-        public OrdersController(IOrdersService service, ILogger<OrdersController> logger)
+        public OrdersController(IOrdersService orderService, ICustomerService customerService, IProductService productService, ILogger<OrdersController> logger)
         {
-            _service = service;
+            _orderService = orderService;
+            _productService = productService;
+            _customerService = customerService;
             _logger = logger;
         }
 
@@ -26,7 +30,7 @@ namespace OrderService.API.Controllers
             try
             {
                 List<OrderViewModel> orders = new List<OrderViewModel>();
-                orders = await _service.GetAllOrders();
+                orders = await _orderService.GetAllOrders();
 
                 if (orders != null)
                 {
@@ -47,7 +51,7 @@ namespace OrderService.API.Controllers
             try
             {
                 OrderViewModel order = new OrderViewModel();
-                order = await _service.GetOrderById(id);
+                order = await _orderService.GetOrderById(id);
 
                 if (order != null)
                 {
@@ -69,7 +73,7 @@ namespace OrderService.API.Controllers
             {
                 if (addedCustomer != null)
                 {
-                    await _service.CreateCustomer(addedCustomer);
+                    await _customerService.CreateCustomer(addedCustomer);
                     return Ok("New customer Added.");
                 }
             }
@@ -87,7 +91,7 @@ namespace OrderService.API.Controllers
             {
                 if (addedProduct != null)
                 {
-                    await _service.CreateProduct(addedProduct);
+                    await _productService.CreateProduct(addedProduct);
                     return Ok("New product Added.");
                 }
             }
@@ -99,13 +103,13 @@ namespace OrderService.API.Controllers
         }
 
         [HttpPost("createOrder")]
-        public async Task<IActionResult> CreateOrder(string customerId, [FromBody]OrderViewModel addedOrder)
+        public async Task<IActionResult> CreateOrder([FromBody]OrderViewModel addedOrder)
         {
             try
             {
                 if (addedOrder != null)
                 {
-                    await _service.CreateOrder(customerId, addedOrder);
+                    await _orderService.CreateOrder(addedOrder);
                     return Ok("New order Added.");
                 }
             }
@@ -122,7 +126,7 @@ namespace OrderService.API.Controllers
             try
             {
                 List<string> contactNames = new List<string>();
-                contactNames = await _service.GetAllCustomerNames();
+                contactNames = await _customerService.GetAllCustomerNames();
 
                 if (contactNames != null)
                 {
@@ -143,7 +147,7 @@ namespace OrderService.API.Controllers
             try
             {
                 List<string> productNames = new List<string>();
-                productNames = await _service.GetAllProductNames();
+                productNames = await _productService.GetAllProductNames();
 
                 if (productNames != null)
                 {
@@ -163,7 +167,7 @@ namespace OrderService.API.Controllers
         {
             try
             {
-                ProductViewModel product = await _service.GetProductByName(productName);
+                ProductViewModel product = await _productService.GetProductByName(productName);
 
                 if (product != null)
                 {
@@ -183,7 +187,7 @@ namespace OrderService.API.Controllers
         {
             try
             {
-                CustomerViewModel customer = await _service.SearchCustomerByName(tag);
+                CustomerViewModel customer = await _customerService.SearchCustomerByName(tag);
 
                 if (customer != null)
                 {

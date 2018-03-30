@@ -37,9 +37,10 @@ export class OrderService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  public AddContact(addedContact: CustomerDetails): Observable<CustomerDetails> {
+  public AddCustomer(addedContact: CustomerDetails): Observable<CustomerDetails> {
     let bodyString = JSON.stringify(addedContact);
-    return this.http.post(this.ordersUrl, bodyString, this.options)
+    const url = `${this.ordersUrl}/createCustomer`;
+    return this.http.post(url, bodyString, this.options)
       .map((res: Response) => <CustomerDetails>res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
@@ -69,6 +70,14 @@ export class OrderService {
     const url = `${this.ordersUrl}/productNames`;
     return this.http.get(url)
       .map((res: Response) => <string[]>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  public CreateOrder(addedOrder: OrderDetails): Observable<OrderDetails> {
+    let bodyString = JSON.stringify(addedOrder);
+    const url = `${this.ordersUrl}/createOrder`;
+    return this.http.post(url, bodyString, this.options)
+      .map((res: Response) => <OrderDetails>res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 

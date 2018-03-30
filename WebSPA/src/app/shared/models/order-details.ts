@@ -4,7 +4,7 @@ export class OrderDetails {
   orderId: string;
   orderDate: Date;
   isCompleted: boolean;
-  customerDetails: CustomerDetails;
+  customer: CustomerDetails;
   orderItems: OrderItem[];
 }
 

@@ -7,19 +7,11 @@ using System.Threading.Tasks;
 namespace OrderService.API.Providers
 {
     public interface IOrdersService
-    {
-        Task CreateCustomer(CustomerViewModel addedCustomer);
-        Task CreateProduct(ProductViewModel addedProduct);
-        Task CreateOrder(string customerId, OrderViewModel addedOrder);
-        Task AddProductsToOrder(string orderId, OrderItemViewModel addedProduct);
-        Task RemoveProductsFromOrder(string orderId, string orderItemId);
+    {              
+        Task CreateOrder(OrderViewModel addedOrder);
         Task UpdateOrder(string orderId, OrderViewModel editedOrder);
         Task DeleteOrder(string orderId);
         Task<List<OrderViewModel>> GetAllOrders();
         Task<OrderViewModel> GetOrderById(string orderId);
-        Task<List<string>> GetAllCustomerNames();
-        Task<CustomerViewModel> SearchCustomerByName(string name);
-        Task<ProductViewModel> GetProductByName(string productName);
-        Task<List<string>> GetAllProductNames();
     }
 }

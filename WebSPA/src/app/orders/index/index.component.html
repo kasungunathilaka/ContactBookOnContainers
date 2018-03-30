@@ -6,23 +6,26 @@
   <hr>
   <div class="card">
     <div class="card-block">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item" *ngFor="let order of orders">
-          <div class="row">
-            <div class="col-md-1">
-              <a class="pull-left" href="#">
-                <img src="../../../assets/order.png" class="img-circle" style="height: 50px;border-radius: 25px">
-              </a>
+      <div class="col">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let order of orders">
+            <div class="row">
+              <div class="col-md-0.5">
+                <a class="pull-left" href="#">
+                  <img src="../../../assets/order.png" class="img-circle" style="height: 50px;border-radius: 25px">
+                </a>
+              </div>
+              <div class="col-md-11 ">
+                <span>Customer : </span>
+                <span class="pull-left">{{ order.customer.firstName }} {{ order.customer.lastName }}</span>
+              </div>
+              <div class="col-md-0.5">
+                <button type="button" style="float: right" class="btn btn-secondary btn-sm" (click)="getOrderDetails(order.orderId)">></button>
+              </div>
             </div>
-            <div class="col-md-10 ">
-              <span class="pull-left">{{ order.firstName }} {{ order.lastName }}</span>
-            </div>
-            <div class="col-md-1">
-              <button type="button" style="float: right" class="btn btn-secondary btn-sm" (click)="getOrderDetails(order.orderId)">></button>
-            </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>      
     </div>
   </div>
 </div>

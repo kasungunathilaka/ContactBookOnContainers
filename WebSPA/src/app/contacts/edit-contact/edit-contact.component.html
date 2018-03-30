@@ -1,22 +1,23 @@
 <div class="container-fluid"> 
-    <div class="page-header">
-      <br>
-      <h5>Edit Contact Details</h5>      
-    </div>
-    <hr> 
-    <div>
-      <form #contactForm="ngForm" novalidate (ngSubmit)="onEditButtonClick(contactForm)">
+  <div class="page-header">
+    <br>
+    <h5>Edit Contact Details</h5>      
+  </div>
+  <hr> 
+  <div>
+    <form #contactForm="ngForm" novalidate (ngSubmit)="onEditButtonClick(contactForm)">
+      <div class="col">
         <div class="form-group row">
           <div class="col">
             <label class="col-form-label col-form-label-sm">First Name</label>
             <input type="text" class="form-control form-control-sm" id="firstName" name="firstName" [(ngModel)]="firstName">
           </div>
           <div class="col">
-              <label class="col-form-label col-form-label-sm">Last Name</label>
+            <label class="col-form-label col-form-label-sm">Last Name</label>
             <input type="text" class="form-control form-control-sm" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Last name">
           </div>
         </div>
-  
+
         <fieldset class="form-group">
           <div class="row">
             <legend class="col-form-label col-form-label-sm col-sm-2 pt-0">Gender</legend>
@@ -32,11 +33,11 @@
                 <label class="form-check-label col-form-label-sm" for="gendeFM">
                   Female
                 </label>
-              </div>                
+              </div>
             </div>
           </div>
         </fieldset>
-  
+
         <div class="form-group row">
           <div class="col">
             <label class="col-form-label col-form-label-sm">Email</label>
@@ -47,7 +48,7 @@
             <input type="text" class="form-control form-control-sm" id="facebookId" name="facebookId" [(ngModel)]="facebookId" placeholder="Facebook Id">
           </div>
         </div>
-  
+
         <div class="form-group row">
           <div class="col">
             <label class="col-form-label col-form-label-sm">Mobile Phone</label>
@@ -58,30 +59,33 @@
             <input type="text" class="form-control form-control-sm" id="homePhone" name="homePhone" [(ngModel)]="homePhone" placeholder="xxxxxxxxxx">
           </div>
         </div>
-  
-        <div class="form-group">
-          <label class="col-form-label col-form-label-sm">Street</label>
-          <input type="text" class="form-control  form-control-sm" id="street" name="street" [(ngModel)]="street" placeholder="1234 Main St.">
-        </div>
+
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
+            <label class="col-form-label col-form-label-sm">Street</label>
+            <input type="text" class="form-control  form-control-sm" id="street" name="street" [(ngModel)]="street" placeholder="1234 Main St.">
+          </div>
+          <div class="form-group col-md-3">
             <label class="col-form-label col-form-label-sm">City</label>
             <input type="text" class="form-control  form-control-sm" id="city" name="city" [(ngModel)]="city" placeholder="City">
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-3">
             <label class="col-form-label col-form-label-sm">Province</label>
-            <input type="text" class="form-control  form-control-sm" id="province" name="province" [(ngModel)]="province" placeholder="Province">
+            <!--<input type="text" class="form-control  form-control-sm" id="province" name="province" [(ngModel)]="province" placeholder="Province">-->
+            <select id="province" class="form-control form-control-sm" name="province" [(ngModel)]="province">
+              <option selected>Choose Province...</option>
+              <option *ngFor="let provinceName of provinceNames">{{ provinceName }}</option>
+            </select>
           </div>
           <div class="form-group col-md-2">
             <label class="col-form-label col-form-label-sm">Zip</label>
             <input type="text" class="form-control  form-control-sm" id="zipcode" name="zipcode" [(ngModel)]="zipCode" placeholder="Zip">
           </div>
         </div>
-  
+      </div>
         <button type="submit" style="float: right" class="btn btn-primary btn-sm">Edit Contact</button>
-      </form>
-    </div>
+    </form>
   </div>
-  
+</div>
   
   

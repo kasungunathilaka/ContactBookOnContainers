@@ -25,6 +25,7 @@ export class EditContactComponent implements OnInit {
   city : string;
   province : string;
   zipCode : string;
+  provinceNames: string[] = ['Northern', 'North Western', 'Western', 'North Central', 'Central', 'Sabaragamuwa', 'Eastern', 'Uva', 'Southern'];
 
   constructor(private _contactService: ContactService, 
     private _toastrService: ToastrServices, 

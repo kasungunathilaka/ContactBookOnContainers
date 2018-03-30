@@ -11,7 +11,7 @@ using System;
 namespace OrderService.API.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20180329071725_initial")]
+    [Migration("20180330120156_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,8 +135,7 @@ namespace OrderService.API.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique();
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -215,8 +214,8 @@ namespace OrderService.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("OrderService.API.Models.Product", "Product")
-                        .WithOne("OrderItem")
-                        .HasForeignKey("OrderService.API.Models.OrderItem", "ProductId")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
