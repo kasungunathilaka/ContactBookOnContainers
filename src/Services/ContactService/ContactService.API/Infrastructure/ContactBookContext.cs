@@ -29,6 +29,36 @@ namespace ContactService.API.Infrastructure
                 .HasOne(a => a.Address)
                 .WithOne(b => b.ContactDetails)
                 .HasForeignKey<Address>(b => b.ContactDetailsId);
+
+            // Create shadow properties
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes()
+                .Where(e => typeof(IAuditable).IsAssignableFrom(e.ClrType)))
+            {
+                modelBuilder.Entity(entityType.ClrType).Property<DateTime>("CreatedDate");
+                modelBuilder.Entity(entityType.ClrType).Property<DateTime>("ModifiedDate");
+            }
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            ApplyAuditInformation();
+            return base.SaveChanges();
+        }
+
+        private void ApplyAuditInformation()
+        {
+            var modifiedEntities = ChangeTracker.Entries<IAuditable>()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+            foreach (var entity in modifiedEntities)
+            {
+                entity.Property("ModifiedDate").CurrentValue = DateTime.UtcNow;
+
+                if (entity.State == EntityState.Added)
+                {
+                    entity.Property("CreatedDate").CurrentValue = DateTime.UtcNow;
+                }
+            }
         }
 
         public class ContactBookContextDesignFactory : IDesignTimeDbContextFactory<ContactBookContext>

@@ -38,6 +38,7 @@ import { ContactsConfigurationService } from '../shared/services/contacts-config
   providers: [
     ContactsConfigurationService,
     ContactService
-  ]
+  ],
+  bootstrap: [ContactsComponent]
 })
 export class ContactsModule { }

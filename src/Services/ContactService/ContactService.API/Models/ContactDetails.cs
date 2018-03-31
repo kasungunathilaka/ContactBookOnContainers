@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ContactService.API.Models
 {
-    public class ContactDetails
+    public class ContactDetails: IAuditable
     {
         public Guid Id { get; set; }
         public Address Address { get; set; }

@@ -1,69 +1,177 @@
 <div class="container-fluid">
   <div class="page-header">
     <br>
-    <h5>Order Details</h5>
+    <div class="row">
+      <div class="col">
+        <h5>Order Details</h5>
+      </div>
+      <div class="col-md-2">
+        <input type="date" class="form-control form-control-sm" id="orderDate" name="orderDate" [(ngModel)]="orderDate" placeholder="" readonly>
+      </div>
+    </div>
   </div>
   <hr>
-  <div class="container-fluid">
-    <div class="form-group row">
-      <div class="col">
-        <label class="col-form-label col-form-label-sm">First Name:</label>
-        <input type="text" class="form-control form-control-sm" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="First name" readonly>
+  <div>
+    <form #orderForm="ngForm" (ngSubmit)="onAddButtonClick(orderForm)">
+      <div>
+        <div class="col">
+          <div class="row-sm">Customer Details :</div>
+          <div class="form-group row">
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">First Name</label>
+              <input type="text" class="form-control form-control-sm" id="firstName" name="firstName" [(ngModel)]="firstName" placeholder="First name" readonly>
+            </div>
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Last Name</label>
+              <input type="text" class="form-control form-control-sm" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Last name" readonly>
+            </div>
+          </div>
+          <!--<fieldset class="form-group">
+      <div class="row">
+        <legend class="col-form-label col-form-label-sm col-sm-2 pt-0">Gender</legend>
+        <div class="col-sm-10">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input form-control-sm" type="radio" name="gender" [(ngModel)]="gender" id="genderM" value="Male" readonly>
+            <label class="form-check-label col-form-label-sm" for="genderM">
+              Male
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input form-control-sm" type="radio" name="gender" [(ngModel)]="gender" id="genderF" value="Female" readonly>
+            <label class="form-check-label col-form-label-sm" for="gendeFM">
+              Female
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="col">
-        <label class="col-form-label col-form-label-sm">Last Name:</label>
-        <input type="text" class="form-control form-control-sm" id="lastName" name="lastName" [(ngModel)]="lastName" placeholder="Last name" readonly>
-      </div>
-    </div>
+    </fieldset>-->
 
-   <div class="form-group row">
-      <div class="col">
-        <label class="col-form-label col-form-label-sm">Email</label>
-        <input type="email" class="form-control form-control-sm" id="email" name="email" [(ngModel)]="email" placeholder="name@example.com" readonly>
-      </div>
-      <div class="col">
-        <label class="col-form-label col-form-label-sm">Facebook Id</label>
-        <input type="text" class="form-control form-control-sm" id="facebookId" name="facebookId" [(ngModel)]="facebookId" placeholder="Facebook Id" readonly>
-      </div>
-    </div>
+          <div class="row-sm">Contact Details :</div>
+          <div class="form-group row">
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Email</label>
+              <input type="email" class="form-control form-control-sm" id="email" name="email" [(ngModel)]="email" placeholder="name@example.com" readonly>
+            </div>
+            <!--<div class="col">
+                <label class="col-form-label col-form-label-sm">Facebook Id</label>
+                <input type="text" class="form-control form-control-sm" id="facebookId" name="facebookId" [(ngModel)]="facebookId" placeholder="Facebook Id" readonly>
+              </div>-->
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Mobile Phone</label>
+              <input type="text" class="form-control form-control-sm" id="mobilePhone" name="mobilePhone" [(ngModel)]="mobilePhone" placeholder="xxxxxxxxxx" readonly>
+            </div>
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Home Phone</label>
+              <input type="text" class="form-control form-control-sm" id="homePhone" name="homePhone" [(ngModel)]="homePhone" placeholder="xxxxxxxxxx" readonly>
+            </div>
+          </div>
 
-    <div class="form-group row">
-      <div class="col">
-        <label class="col-form-label col-form-label-sm">Mobile Phone</label>
-        <input type="text" class="form-control form-control-sm" id="mobilePhone" name="mobilePhone" [(ngModel)]="mobilePhone" placeholder="xxxxxxxxxx" readonly>
-      </div>
-      <div class="col">
-        <label class="col-form-label col-form-label-sm">Home Phone</label>
-        <input type="text" class="form-control form-control-sm" id="homePhone" name="homePhone" [(ngModel)]="homePhone" placeholder="xxxxxxxxxx" readonly>
-      </div>
-    </div>
-    
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label class="col-form-label col-form-label-sm">Street</label>
-        <input type="text" class="form-control  form-control-sm" id="street" name="street" [(ngModel)]="street" placeholder="1234 Main St." readonly>
-      </div>
-      <div class="form-group col-md-3">
-        <label class="col-form-label col-form-label-sm">City</label>
-        <input type="text" class="form-control  form-control-sm" id="city" name="city" [(ngModel)]="city" placeholder="City" readonly>
-      </div>
-      <div class="form-group col-md-3">
-        <label class="col-form-label col-form-label-sm">Province</label>
-        <input type="text" class="form-control  form-control-sm" id="province" name="province" [(ngModel)]="province" placeholder="Province" readonly>
-      </div>
-      <div class="form-group col-md-2">
-        <label class="col-form-label col-form-label-sm">Zip</label>
-        <input type="text" class="form-control  form-control-sm" id="zipcode" name="zipcode" [(ngModel)]="zipCode" placeholder="Zip" readonly>
-      </div>
-    </div>
+          <div class="row-sm">Billing Address Details :</div>
+          <div class="form-row" *ngFor="let address of addresses">
+            <div class="form-group col-md-4">
+              <label class="col-form-label col-form-label-sm">Street</label>
+              <input type="text" class="form-control  form-control-sm" id="address.street" name="address.street" [(ngModel)]="address.street" placeholder="1234 Main St." readonly>
+            </div>
+            <div class="form-group col-md-3">
+              <label class="col-form-label col-form-label-sm">City</label>
+              <input type="text" class="form-control  form-control-sm" id="address.city" name="address.city" [(ngModel)]="address.city" placeholder="City" readonly>
+            </div>
+            <div class="form-group col-md-3">
+              <label class="col-form-label col-form-label-sm">Province</label>
+              <input type="text" class="form-control  form-control-sm" id="address.province" name="address.province" [(ngModel)]="address.province" placeholder="Province" readonly>
+            </div>
+            <div class="form-group col-md-2">
+              <label class="col-form-label col-form-label-sm">Zip</label>
+              <input type="text" class="form-control  form-control-sm" id="address.zipcode" name="address.zipcode" [(ngModel)]="address.zipCode" placeholder="Zip" readonly>
+            </div>
+          </div>
+        </div>
+        <hr />
 
-    <div style="float: right">
-      <button type="submit" class="btn btn-info btn-sm" (click)="editDetails(customerId)">Edit Contact</button>
-      &nbsp;
-      <button type="button" class="btn btn-danger btn-sm" (click)="deleteContact(customerId)">Delete Contact</button>
+        <!--<div>
+    <div class="col-sm">Add Order Items :</div>
+    <div class="form-group col">
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label class="col-form-label col-form-label-sm">Product</label>
+          <select id="productN" class="form-control form-control-sm" name="productN" [(ngModel)]="productN" (ngModelChange)="onProductSelected()">
+            <option selected>Choose Product...</option>
+            <option *ngFor="let productName of productNames">{{ productName }}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label class="col-form-label col-form-label-sm">Product Category</label>
+          <input type="text" class="form-control form-control-sm" id="productCategory" name="productCategory" [(ngModel)]="productCategory" placeholder="Product Category" readonly>
+        </div>
+        <div class="form-group col-md-2">
+          <label class="col-form-label col-form-label-sm">Description</label>
+          <input type="text" class="form-control form-control-sm" id="description" name="description" [(ngModel)]="description" placeholder="Description" readonly>
+        </div>
+        <div class="form-group col-md-2">
+          <label class="col-form-label col-form-label-sm">Unit Price</label>
+          <input type="text" class="form-control form-control-sm" id="unitPrice" name="unitPrice" [(ngModel)]="unitPrice" placeholder="Unit Price" readonly>
+        </div>
+        <div class="form-group col-md-2">
+          <label class="col-form-label col-form-label-sm">Availability</label>
+          <input type="text" class="form-control form-control-sm" id="availability" name="availability" [(ngModel)]="availability" placeholder="Availability" readonly>
+        </div>
+        <div class="form-group col-md-1">
+          <label class="col-form-label col-form-label-sm">Quantity</label>
+          <input type="text" class="form-control  form-control-sm" id="quantity" name="quantity" [(ngModel)]="quantity" placeholder="Quantity">
+        </div>
+        <div *ngIf="availability == 'In Stock' && customer && quantity > 0">
+          <label class="col-form-label col-form-label-sm"> `</label>
+          <button type="button" style="background-color:white" class="form-control  form-control-sm btn btn-sm" (click)="addOrderItems()"><img src="../../../assets/add.png" style="height: 25px;"></button>
+        </div>
+      </div>
     </div>
+  </div>
+  <hr />-->
 
+        <div class="col-sm">Order Item Details :</div>
+        <div>
+          <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="productName">
+              <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+              <mat-cell *matCellDef="let orderItem"> {{ orderItem.productName }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="productCategory">
+              <mat-header-cell *matHeaderCellDef> Product Category </mat-header-cell>
+              <mat-cell *matCellDef="let orderItem"> {{ orderItem.productCategoryName }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+              <mat-cell *matCellDef="let orderItem"> {{ orderItem.description }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="price">
+              <mat-header-cell *matHeaderCellDef> Unit Price </mat-header-cell>
+              <mat-cell *matCellDef="let orderItem"> {{ orderItem.price }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="quantity">
+              <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+              <mat-cell *matCellDef="let orderItem"> {{ (orderItem.quantity != null ? orderItem.quantity : 0) }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+              <mat-cell *matCellDef="let orderItem"> {{ (orderItem.price != null && orderItem.quantity != null ? orderItem.price * orderItem.quantity : 0)}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+        <hr />
+        <div class="form-check">
+          <div class="col">
+            <input type="checkbox" class="form-check-input" id="isCompleted" name="isCompleted" [(ngModel)]="isCompleted" disabled="disabled">
+            <label class="form-check-label" for="isCompleted">Order is Completed.</label>
+          </div>
+        </div>
+        <div style="float: right">
+          <button *ngIf="!isCompleted" type="submit" class="btn btn-info btn-sm" (click)="editDetails(customerId)"><img src="../../../assets/edit.png" style="height: 20px;">&nbsp; Edit Order</button>
+          &nbsp;
+          <button type="button" class="btn btn-sm btn-danger" (click)="deleteContact(customerId)"><img src="../../../assets/delete.png" style="height: 20px;">&nbsp; Delete Order</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
-
-

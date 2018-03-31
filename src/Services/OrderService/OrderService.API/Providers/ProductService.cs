@@ -23,26 +23,50 @@ namespace OrderService.API.Providers
         {
             _productGuid = Guid.NewGuid();
             _productCatagoryGuid = Guid.NewGuid();
+            Product product;
+            ProductCategory productCategory;
 
-            ProductCategory productCategory = new ProductCategory
+            if (addedProduct.ProductCategoryName !=  null)
             {
-                ProductCategoryId = _productCatagoryGuid,
-                ProductCategoryName = addedProduct.ProductCategoryName
-            };
+                List<string> productCategoryNames = await GetAllProductCategoryNames();
 
-            Product product = new Product
-            {
-                ProductId = _productGuid,
-                ProductCategoryId = _productCatagoryGuid,
-                ProductName = addedProduct.ProductName,
-                Description = addedProduct.Description,
-                Price = addedProduct.Price,
-                IsAvailable = addedProduct.IsAvailable
-            };
+                if (productCategoryNames.Contains(addedProduct.ProductCategoryName))
+                {
+                    productCategory = await _dbConext.ProductCategories.FirstOrDefaultAsync(c => c.ProductCategoryName.Equals(addedProduct.ProductCategoryName));
 
-            await _dbConext.Products.AddAsync(product);
-            await _dbConext.ProductCategories.AddAsync(productCategory);
-            _dbConext.SaveChanges();
+                    product = new Product
+                    {
+                        ProductId = _productGuid,
+                        ProductCategoryId = productCategory.ProductCategoryId,
+                        ProductName = addedProduct.ProductName,
+                        Description = addedProduct.Description,
+                        Price = addedProduct.Price,
+                        IsAvailable = addedProduct.IsAvailable
+                    };
+                    await _dbConext.Products.AddAsync(product);
+                }
+                else
+                {
+                    productCategory = new ProductCategory
+                    {
+                        ProductCategoryId = _productCatagoryGuid,
+                        ProductCategoryName = addedProduct.ProductCategoryName
+                    };
+
+                    product = new Product
+                    {
+                        ProductId = _productGuid,
+                        ProductCategoryId = _productCatagoryGuid,
+                        ProductName = addedProduct.ProductName,
+                        Description = addedProduct.Description,
+                        Price = addedProduct.Price,
+                        IsAvailable = addedProduct.IsAvailable
+                    };
+                    await _dbConext.Products.AddAsync(product);
+                    await _dbConext.ProductCategories.AddAsync(productCategory);
+                }               
+                _dbConext.SaveChanges();
+            }           
         }
 
         public async Task<ProductViewModel> GetProductByName(string productName)
@@ -82,6 +106,25 @@ namespace OrderService.API.Providers
                     }
                 }
                 return productNames;
+            }
+            return null;
+        }
+
+        public async Task<List<string>> GetAllProductCategoryNames()
+        {
+            List<string> productCategoryNames = new List<string>();
+            List<ProductCategory> productCategories = await _dbConext.ProductCategories.ToListAsync();
+
+            if (productCategories.Count > 0)
+            {
+                foreach (var productCategory in productCategories)
+                {
+                    if (productCategory != null)
+                    {
+                        productCategoryNames.Add(productCategory.ProductCategoryName);
+                    }
+                }
+                return productCategoryNames;
             }
             return null;
         }

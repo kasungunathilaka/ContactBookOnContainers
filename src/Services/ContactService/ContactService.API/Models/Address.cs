@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ContactService.API.Models
 {
-    public class Address
+    public class Address: IAuditable
     {
         public int Id { get; set; }
         public string Street { get; set; }

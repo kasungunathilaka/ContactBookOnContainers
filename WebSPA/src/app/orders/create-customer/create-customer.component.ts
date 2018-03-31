@@ -49,7 +49,7 @@ export class CreateCustomerComponent implements OnInit {
     addedCustomer.facebookId = customerForm.controls['facebookId'].value;
     addedCustomer.addresses = this.addresses;
 
-    this._orderService.AddCustomer(addedCustomer)
+    this._orderService.CreateCustomer(addedCustomer)
       .subscribe(
         result => {
             //console.log(addedCustomer);

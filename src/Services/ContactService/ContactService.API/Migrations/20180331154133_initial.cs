@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ContactService.API.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +14,11 @@ namespace ContactService.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     Gender = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,11 +30,13 @@ namespace ContactService.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
                     CustomerId = table.Column<Guid>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     FacebookId = table.Column<string>(nullable: true),
                     HomePhone = table.Column<string>(nullable: true),
-                    MobilePhone = table.Column<string>(nullable: true)
+                    MobilePhone = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,6 +57,8 @@ namespace ContactService.API.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     City = table.Column<string>(nullable: true),
                     ContactDetailsId = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     Province = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
                     ZipCode = table.Column<string>(nullable: true)

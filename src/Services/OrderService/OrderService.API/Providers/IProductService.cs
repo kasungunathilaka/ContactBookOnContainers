@@ -11,5 +11,6 @@ namespace OrderService.API.Providers
         Task CreateProduct(ProductViewModel addedProduct);
         Task<ProductViewModel> GetProductByName(string productName);
         Task<List<string>> GetAllProductNames();
+        Task<List<string>> GetAllProductCategoryNames();
     }
 }

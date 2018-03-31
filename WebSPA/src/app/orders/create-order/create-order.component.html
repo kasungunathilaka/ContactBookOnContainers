@@ -21,7 +21,7 @@
               <p>or</p>
             </div>
             <div class="col-sm-3">
-              <button type="button" class="form-control  form-control-sm btn-sm btn-primary" (click)="onCreateCustomer()">Create New Customer</button>
+              <button type="button" class="form-control  form-control-sm btn-sm btn-primary" (click)="onCreateCustomer()"><img src="../../../assets/add.png" style="height: 20px;">&nbsp; Create New Customer</button>
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@
               </div>
               <div *ngIf="availability == 'In Stock' && customer && quantity > 0">
                 <label class="col-form-label col-form-label-sm"> `</label>
-                <button type="button" class="form-control  form-control-sm btn-sm btn-success" (click)="addOrderItems()">Add Items</button>
+                <button type="button" style="background-color:white" class="form-control  form-control-sm btn btn-sm" (click)="addOrderItems()"><img src="../../../assets/add.png" style="height: 25px;"></button>
               </div>
             </div>
           </div>
@@ -169,7 +169,7 @@
             </ng-container>
             <ng-container matColumnDef="delete">
               <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
-              <mat-cell *matCellDef="let orderItem"> <button type="button" class="form-control-sm btn-sm btn-danger" (click)="removeOrderItems(orderItem.orderItemId)">X</button> </mat-cell>
+              <mat-cell *matCellDef="let orderItem"> <button type="button" style="background-color:white; border:0px solid transparent;" class="form-control-sm btn btn-sm" (click)="removeOrderItems(orderItem.orderItemId)"><img src="../../../assets/cancel.png" style="height: 20px;"></button> </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -182,7 +182,7 @@
             <label class="form-check-label" for="isCompleted">Order is Completed.</label>
           </div>                 
         </div>
-        <button *ngIf="orderItems.length > 0" type="submit" style="float: right" class="btn btn-primary btn-sm">Create Order</button>
+        <button *ngIf="orderItems.length > 0" type="submit" style="float: right" class="btn btn-primary btn-sm"><img src="../../../assets/add.png" style="height: 20px;">&nbsp; Create Order</button>
       </div>
     </form>
   </div>

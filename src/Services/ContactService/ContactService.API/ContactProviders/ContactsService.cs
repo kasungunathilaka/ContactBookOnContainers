@@ -142,7 +142,7 @@ namespace ContactService.API.ContactProviders
             await _dbConext.Customers.AddAsync(customer);
             await _dbConext.ContactDetails.AddAsync(details);
             await _dbConext.Address.AddAsync(address);
-            await _dbConext.SaveChangesAsync();
+            _dbConext.SaveChanges();
         }
 
         public async Task DeleteContact(string id)
@@ -157,7 +157,7 @@ namespace ContactService.API.ContactProviders
                 _dbConext.Customers.Remove(customer);
                 _dbConext.ContactDetails.Remove(details);
                 _dbConext.Address.Remove(address);
-                await _dbConext.SaveChangesAsync();
+                _dbConext.SaveChanges();
             }
         }
 
@@ -187,7 +187,7 @@ namespace ContactService.API.ContactProviders
                 _dbConext.Customers.Update(customer);
                 _dbConext.ContactDetails.Update(details);
                 _dbConext.Address.Update(address);
-                await _dbConext.SaveChangesAsync();
+                _dbConext.SaveChanges();
             }
         }
 

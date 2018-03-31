@@ -10,8 +10,11 @@
           <li class="list-group-item" *ngFor="let contact of contacts">
             <div class="row">
               <div class="col-md-1">
-                <a class="pull-left" href="#">
-                  <img  src="../../assets/user.jpg" class="img-circle" style="height: 50px;border-radius: 25px">
+                <a class="pull-left" href="#" *ngIf="contact.gender == 'Male'">
+                  <img src="../../../assets/man.png" class="img-circle" style="height: 50px;border-radius: 25px">
+                </a>
+                <a class="pull-left" href="#" *ngIf="contact.gender == 'Female'">
+                  <img src="../../../assets/woman.png" class="img-circle" style="height: 50px;border-radius: 25px">
                 </a>
               </div>     
               <div class="col-md-10 ">
@@ -22,7 +25,7 @@
                 <span>Home: {{ contact.homePhone }} </span>
               </div>
               <div class="col-md-1">
-                  <button type="button" style="float: right" class="btn btn-secondary btn-sm" (click)="getDetails(contact.customerId)">></button>
+                <button type="button" style="float: right; background-color:white" class="btn btn-sm" (click)="getDetails(contact.customerId)"><img src="../../../assets/details.png" style="height: 40px;"></button>
               </div>
             </div>          
           </li>
@@ -30,5 +33,4 @@
       </div>
     </div>  
   </div>
-  
   

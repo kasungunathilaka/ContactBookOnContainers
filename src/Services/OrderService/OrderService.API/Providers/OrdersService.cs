@@ -143,7 +143,7 @@ namespace OrderService.API.Providers
                         OrderViewModel orderVM = new OrderViewModel
                         {
                             OrderId = order.OrderId,
-                            OrderDate = order.OrderDate,
+                            OrderDate = order.OrderDate.ToString(),
                             IsCompleted = order.IsCompleted,
                             OrderItems = orderItemsVM,
                             Customer = customerVM
@@ -229,9 +229,9 @@ namespace OrderService.API.Providers
                     OrderViewModel orderVM = new OrderViewModel
                     {
                         OrderId = order.OrderId,
-                        OrderDate = order.OrderDate,
+                        OrderDate = order.OrderDate.Date.ToString(),
                         IsCompleted = order.IsCompleted,
-
+                        Customer = customerVM,
                         OrderItems = orderItemsVM
                     };
                     return orderVM;

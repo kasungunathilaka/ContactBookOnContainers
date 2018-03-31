@@ -3,31 +3,37 @@
       <br>
       <h5>Contacts</h5> 
   </div>
-    <hr>
-  <div class="card">
-    <div class="card-block">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item" *ngFor="let contact of contacts">
-          <div class="row">
-            <div class="col-md-1">
-              <a class="pull-left" href="#">
-                <img  src="../../../assets/user.jpg" class="img-circle" style="height: 50px;border-radius: 25px">
-              </a>
-            </div>     
-            <div class="col-md-10 ">
-              <span class="pull-left">{{ contact.firstName }} {{ contact.lastName }}</span>
-              <br>&nbsp;
-              <span>Mobile: {{ contact.mobilePhone }} </span>
-              &nbsp;/&nbsp;
-              <span>Home: {{ contact.homePhone }} </span>
+  <hr>
+  <div class="col">
+    <div class="card">
+      <div class="card-block">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let contact of contacts">
+            <div class="row">
+              <div class="col-md-0.8">
+                <a class="pull-left" href="#" *ngIf="contact.gender == 'Male'">&nbsp;
+                  <img src="../../../assets/man.png" class="img-circle" style="height: 50px;border-radius: 25px">
+                </a>
+                <a class="pull-left" href="#" *ngIf="contact.gender == 'Female'">&nbsp;
+                  <img src="../../../assets/woman.png" class="img-circle" style="height: 50px;border-radius: 25px">
+                </a>
+              </div>
+              <div class="col-md-10 ">
+                <span class="pull-left">{{ contact.firstName }} {{ contact.lastName }}</span>
+                <br>&nbsp;
+                <span>Mobile: {{ contact.mobilePhone }} </span>
+                &nbsp;/&nbsp;
+                <span>Home: {{ contact.homePhone }} </span>
+              </div>
+              <div class="col-md-1">
+                <button type="button" style="float: right; background-color:white" class="btn btn-sm" (click)="getDetails(contact.customerId)"><img src="../../../assets/details.png" style="height: 40px;"></button>
+              </div>
             </div>
-            <div class="col-md-1">
-                <button type="button" style="float: right" class="btn btn-secondary btn-sm" (click)="getDetails(contact.customerId)">></button>
-            </div>
-          </div>          
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>  
+  </div>
 </div>
+
 

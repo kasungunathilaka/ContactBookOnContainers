@@ -21,7 +21,7 @@ export class IndexComponent implements OnInit {
     this._orderService.getAllOrders()
       .subscribe(orders => {
         this.orders = orders;
-        console.log(this.orders);
+        //console.log(this.orders);
       },
       error => {
         console.log(error);

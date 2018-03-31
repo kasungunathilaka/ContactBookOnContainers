@@ -40,6 +40,7 @@ import { CreateOrderComponent } from './create-order/create-order.component';
   providers: [
     OrdersConfigurationService,
     OrderService
-  ]
+  ],
+  bootstrap: [OrdersComponent]
 })
 export class OrdersModule { }

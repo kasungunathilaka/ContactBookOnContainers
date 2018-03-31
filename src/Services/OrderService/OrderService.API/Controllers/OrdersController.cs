@@ -162,6 +162,27 @@ namespace OrderService.API.Controllers
             return BadRequest("Could not found any products.");
         }
 
+        [HttpGet("productCategoryNames")]
+        public async Task<IActionResult> GetAllProductCategoryNames()
+        {
+            try
+            {
+                List<string> productCategoryNames = new List<string>();
+                productCategoryNames = await _productService.GetAllProductCategoryNames();
+
+                if (productCategoryNames != null)
+                {
+                    return Ok(productCategoryNames);
+                }
+                return NotFound("Could not found any Product Categories.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while getting Product Categories: {ex.Message}");
+            }
+            return BadRequest("Could not found any Product Categories.");
+        }
+
         [HttpGet("product/{productName}")]
         public async Task<IActionResult> GetProductByName(string productName)
         {

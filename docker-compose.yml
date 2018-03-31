@@ -13,10 +13,10 @@ services:
 
   #sql.data:
   #  image: microsoft/mssql-server-linux:2017-latest
-  # environment:
-  #   SA_PASSWORD: "Qweasd123"
-  #   ACCEPT_EULA: "Y"
-  # ports:
+  #  environment:
+  #    SA_PASSWORD: "Qweasd123"
+  #    ACCEPT_EULA: "Y"
+  #  ports:
   #    - "5434:1433"
 
   #webspa:

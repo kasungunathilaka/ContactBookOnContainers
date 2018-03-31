@@ -4,14 +4,15 @@
     <h5>Order</h5>
   </div>
   <hr>
-  <div class="card">
-    <div class="card-block">
-      <div class="col">
+  <div class="col">
+    <div class="card">
+      <div class="card-block">
+
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let order of orders">
             <div class="row">
-              <div class="col-md-0.5">
-                <a class="pull-left" href="#">
+              <div class="col-md-0.8">
+                <a class="pull-left" href="#">&nbsp;
                   <img src="../../../assets/order.png" class="img-circle" style="height: 50px;border-radius: 25px">
                 </a>
               </div>
@@ -20,12 +21,12 @@
                 <span class="pull-left">{{ order.customer.firstName }} {{ order.customer.lastName }}</span>
               </div>
               <div class="col-md-0.5">
-                <button type="button" style="float: right" class="btn btn-secondary btn-sm" (click)="getOrderDetails(order.orderId)">></button>
+                <button type="button" style="float: right; background-color:white" class="btn btn-sm" (click)="getOrderDetails(order.orderId)"><img src="../../../assets/details.png" style="height: 40px;"></button>
               </div>
             </div>
           </li>
         </ul>
-      </div>      
+      </div>
     </div>
   </div>
 </div>

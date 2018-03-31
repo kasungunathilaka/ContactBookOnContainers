@@ -17,7 +17,7 @@ namespace ContactService.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("ContactService.API.Models.Address", b =>
@@ -28,6 +28,10 @@ namespace ContactService.API.Migrations
                     b.Property<string>("City");
 
                     b.Property<Guid>("ContactDetailsId");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Province");
 
@@ -48,6 +52,8 @@ namespace ContactService.API.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreatedDate");
+
                     b.Property<Guid>("CustomerId");
 
                     b.Property<string>("Email");
@@ -57,6 +63,8 @@ namespace ContactService.API.Migrations
                     b.Property<string>("HomePhone");
 
                     b.Property<string>("MobilePhone");
+
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.HasKey("Id");
 
@@ -71,11 +79,15 @@ namespace ContactService.API.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreatedDate");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("Gender");
 
                     b.Property<string>("LastName");
+
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.HasKey("Id");
 

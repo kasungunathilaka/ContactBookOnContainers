@@ -8,7 +8,7 @@ namespace OrderService.API.ViewModels
     public class OrderViewModel
     {
         public Guid OrderId { get; set; }
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; }
         public bool IsCompleted { get; set; }
         public CustomerViewModel Customer { get; set; }
         public ICollection<OrderItemViewModel> OrderItems { get; set; }
