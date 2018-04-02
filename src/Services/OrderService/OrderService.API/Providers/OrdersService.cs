@@ -55,16 +55,53 @@ namespace OrderService.API.Providers
             }           
         }
              
-        public Task UpdateOrder(string orderId, OrderViewModel editedOrder)
+        public async Task UpdateOrder(string orderId, OrderViewModel editedOrder)
         {
-            throw new NotImplementedException();
+            if (orderId != null)
+            {
+                Order order = await _dbConext.Orders.FirstOrDefaultAsync(o => o.OrderId.ToString().Equals(orderId));
+                List<OrderItem> orderItems = await _dbConext.OrderItems.Where(i => i.OrderId.ToString().Equals(orderId)).ToListAsync();
+
+                List<OrderItem> editedOrderItems = new List<OrderItem>();
+                if (editedOrder.OrderItems != null)
+                {
+                    foreach (var itemVM in editedOrder.OrderItems)
+                    {
+                        OrderItem orderItem = new OrderItem
+                        {
+                            OrderItemId = Guid.NewGuid(),
+                            OrderId = Guid.Parse(orderId),
+                            Quantity = itemVM.Quantity,
+                            ProductId = itemVM.ProductId
+                        };
+                        editedOrderItems.Add(orderItem);
+                    }
+                }
+
+                _dbConext.OrderItems.RemoveRange(orderItems);
+                await _dbConext.OrderItems.AddRangeAsync(editedOrderItems);
+
+                order.IsCompleted = editedOrder.IsCompleted;
+                _dbConext.Orders.Update(order);
+                _dbConext.SaveChanges();
+            }
         }
-        public Task DeleteOrder(string orderId)
+
+        public async Task DeleteOrder(string orderId)
         {
-            throw new NotImplementedException();
+            if (orderId != null)
+            {
+                Order order = await _dbConext.Orders.FirstOrDefaultAsync(o => o.OrderId.ToString().Equals(orderId));
+                List<OrderItem> orderItems = await _dbConext.OrderItems.Where(i => i.OrderId.ToString().Equals(orderId)).ToListAsync();
+
+                _dbConext.OrderItems.RemoveRange(orderItems);
+                _dbConext.Orders.Remove(order);
+                _dbConext.SaveChanges();
+            }         
         }
 
         public async Task<List<OrderViewModel>> GetAllOrders()
+
         {
             List<OrderViewModel> ordersVM = new List<OrderViewModel>();
             List<Order> orders = await _dbConext.Orders.OrderBy(o => o.OrderDate).ToListAsync();
@@ -140,10 +177,14 @@ namespace OrderService.API.Providers
                             MobilePhone = contactDetails != null ? contactDetails.MobilePhone : null
                         };
 
+                        string date = order.OrderDate.ToShortDateString();
+                        string[] dateComponents = date.Split('/');
+                        string formattedDate = dateComponents[2] + "-" + dateComponents[0] + "-" + dateComponents[1];
+
                         OrderViewModel orderVM = new OrderViewModel
                         {
                             OrderId = order.OrderId,
-                            OrderDate = order.OrderDate.ToString(),
+                            OrderDate = formattedDate,
                             IsCompleted = order.IsCompleted,
                             OrderItems = orderItemsVM,
                             Customer = customerVM
@@ -226,10 +267,14 @@ namespace OrderService.API.Providers
                         MobilePhone = contactDetails != null ? contactDetails.MobilePhone : null
                     };
 
+                    string date = order.OrderDate.ToShortDateString();
+                    string[] dateComponents = date.Split('/');
+                    string formattedDate = dateComponents[2] + "-" + dateComponents[0] + "-" + dateComponents[1];
+
                     OrderViewModel orderVM = new OrderViewModel
                     {
                         OrderId = order.OrderId,
-                        OrderDate = order.OrderDate.Date.ToString(),
+                        OrderDate = formattedDate,
                         IsCompleted = order.IsCompleted,
                         Customer = customerVM,
                         OrderItems = orderItemsVM

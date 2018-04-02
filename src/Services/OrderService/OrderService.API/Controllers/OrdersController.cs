@@ -224,5 +224,35 @@ namespace OrderService.API.Controllers
             return BadRequest("Could not found any customer.");
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrder(string id)
+        {
+            try
+            {
+                await _orderService.DeleteOrder(id);
+                return Ok("Order Deleted.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while deleting the order: {ex.Message}");
+            }
+            return BadRequest("Failed to delete the order.");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateOrder(string id, [FromBody]OrderViewModel editedOrder)
+        {
+            try
+            {
+                await _orderService.UpdateOrder(id, editedOrder);
+                return Ok("Order Edited.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while editing the order: {ex.Message}");
+            }
+            return BadRequest("Failed to edit the order.");
+        }
+
     }
 }

@@ -16,6 +16,7 @@ import { OrdersConfigurationService } from '../shared/services/orders-configurat
 import { OrderService } from '../shared/services/order.service';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
+import { EditOrderComponent } from './edit-order/edit-order.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CreateOrderComponent } from './create-order/create-order.component';
     CreateCustomerComponent,
     CreateProductComponent,
     OrderDetailsComponent,
-    CreateOrderComponent
+    CreateOrderComponent,
+    EditOrderComponent
   ],
   imports: [
     OrdersRoutingModule,

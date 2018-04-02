@@ -8,10 +8,10 @@ services:
       - "5103:80"
 
   #sql.data:
-  # environment:
+  #  environment:
   #    - SA_PASSWORD=Qweasd123
   #    - ACCEPT_EULA=Y
-  # ports:
+  #  ports:
   #    - "5434:1433"
 
   #webspa:

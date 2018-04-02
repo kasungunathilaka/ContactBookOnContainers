@@ -4,6 +4,7 @@ import { OrderDetails, OrderItem } from '../../shared/models/order-details';
 import { OrderService } from '../../shared/services/order.service';
 import { MatTableDataSource } from '@angular/material';
 import { Address } from '../../shared/models/customer-details';
+import { ToastrServices } from '../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-order-details',
@@ -28,7 +29,7 @@ export class OrderDetailsComponent implements OnInit {
   displayedColumns = ['productName', 'productCategory', 'description', 'price', 'quantity', 'amount'];
   dataSource = new MatTableDataSource<OrderItem>(this.orderItems);
 
-  constructor(private _router: Router, private _route: ActivatedRoute, private _orderService: OrderService) { }
+  constructor(private _router: Router, private _route: ActivatedRoute, private _orderService: OrderService, private _toastrService: ToastrServices) { }
 
   ngOnInit() {
     this.param = this._route.params.subscribe(p => {
@@ -63,5 +64,22 @@ export class OrderDetailsComponent implements OnInit {
       });
   }
 
-}
+  editOrder(id) {
+    this._router.navigate(['orders/editOrder/', id]);
+  }
 
+  deleteOrder(id) {
+    this._orderService.DeleteOrder(id)
+      .subscribe(
+        result => {
+          //console.log('Order Deleted.');           
+          this._toastrService.success('Order Deleted Successfully.', '');
+          this._router.navigate(['orders']);
+        },
+        error => {
+          console.log(error);
+          this._toastrService.error('Order Deletion Failed.', 'Error');
+        });
+  }
+
+}

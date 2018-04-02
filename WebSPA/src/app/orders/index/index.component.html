@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="page-header">
     <br>
-    <h5>Order</h5>
+    <h5>Orders History</h5>
   </div>
   <hr>
   <div class="col">
@@ -11,14 +11,37 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let order of orders">
             <div class="row">
-              <div class="col-md-0.8">
+              <div class="col-md-1">
                 <a class="pull-left" href="#">&nbsp;
                   <img src="../../../assets/order.png" class="img-circle" style="height: 50px;border-radius: 25px">
                 </a>
               </div>
-              <div class="col-md-11 ">
-                <span>Customer : </span>
-                <span class="pull-left">{{ order.customer.firstName }} {{ order.customer.lastName }}</span>
+              <div class="col-md-10">
+                <div class="row">
+                  <span class="pull-left" style="float: right;">&nbsp;{{ order.orderDate }}</span>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span>Customer : </span>
+                    <span class="pull-left">&nbsp;{{ order.customer.firstName }} {{ order.customer.lastName }}</span>
+                  </div>
+                  <div class="col-md-2" *ngIf="order.isCompleted">
+                    <span class="pull-left">&nbsp;<img src="../../../assets/completed.png" style="height: 15px;">&nbsp;Completed</span>
+                  </div>
+                  <div class="col-md-2" *ngIf="!order.isCompleted">
+                    <span class="pull-left">&nbsp;<img src="../../../assets/notcompleted.png" style="height: 15px;">&nbsp;Not Completed</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span>Billing Address : </span>
+                    <span class="pull-left">&nbsp;{{ order.customer.addresses[0].street }}, {{ order.customer.addresses[0].city }}, {{ order.customer.addresses[0].province }} Province, {{ order.customer.addresses[0].zipCode }}</span>
+                  </div>
+                  <div class="col">
+                    <span>Contact No : </span>
+                    <span class="pull-left">&nbsp;{{ order.customer.mobilePhone }} / {{ order.customer.homePhone }}</span>
+                  </div>
+                </div>
               </div>
               <div class="col-md-0.5">
                 <button type="button" style="float: right; background-color:white" class="btn btn-sm" (click)="getOrderDetails(order.orderId)"><img src="../../../assets/details.png" style="height: 40px;"></button>

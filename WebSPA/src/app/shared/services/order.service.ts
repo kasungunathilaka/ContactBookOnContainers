@@ -88,6 +88,21 @@ export class OrderService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  public DeleteOrder(id: string): Observable<OrderDetails> {
+    const url = `${this.ordersUrl}/${id}`;
+    return this.http.delete(url, this.options)
+      .map((res: Response) => <OrderDetails>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  public UpdateOrder(id: string, editedOrder: OrderDetails): Observable<OrderDetails> {
+    let bodyString = JSON.stringify(editedOrder);
+    const url = `${this.ordersUrl}/${id}`;
+    return this.http.put(url, bodyString, this.options)
+      .map((res: Response) => <OrderDetails>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   public CreateProduct(addedProduct: ProductDetails): Observable<ProductDetails> {
     let bodyString = JSON.stringify(addedProduct);
     const url = `${this.ordersUrl}/createProduct`;
