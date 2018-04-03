@@ -30,7 +30,7 @@ namespace OrderService.API.Providers
             {
                 List<string> productCategoryNames = await GetAllProductCategoryNames();
 
-                if (productCategoryNames.Contains(addedProduct.ProductCategoryName))
+                if (productCategoryNames != null && productCategoryNames.Contains(addedProduct.ProductCategoryName))
                 {
                     productCategory = await _dbConext.ProductCategories.FirstOrDefaultAsync(c => c.ProductCategoryName.Equals(addedProduct.ProductCategoryName));
 
@@ -127,6 +127,48 @@ namespace OrderService.API.Providers
                 return productCategoryNames;
             }
             return null;
+        }
+
+        public async Task<List<ProductViewModel>> GetAllProducts()
+        {
+            List<ProductViewModel> productsVM = new List<ProductViewModel>();
+            List<Product> products = await _dbConext.Products.OrderBy(p => p.ProductName).ToListAsync();
+
+            if (products != null)
+            {
+                foreach (var product in products)
+                {
+                    if (product.ProductCategoryId != null)
+                    {
+                        ProductCategory productCategory = await _dbConext.ProductCategories.FirstOrDefaultAsync(p => p.ProductCategoryId.Equals(product.ProductCategoryId));
+
+                        ProductViewModel productVM = new ProductViewModel
+                        {
+                            ProductId = product.ProductId,
+                            ProductName = product.ProductName,
+                            Description = product.Description,
+                            Price = product.Price,
+                            IsAvailable = product.IsAvailable,
+                            ProductCategoryId = product.ProductCategoryId,
+                            ProductCategoryName = productCategory.ProductCategoryName
+                        };
+                        productsVM.Add(productVM);
+                    }                
+                }
+                return productsVM;
+            }
+            return null;
+        }
+
+        public async Task DeleteProduct(string productId)
+        {
+            if (productId != null)
+            {
+                Product product = await _dbConext.Products.FirstOrDefaultAsync(p => p.ProductId.ToString().Equals(productId));
+
+                _dbConext.Products.Remove(product);
+                _dbConext.SaveChanges();
+            }
         }
     }
 }

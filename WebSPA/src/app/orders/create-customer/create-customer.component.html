@@ -1,10 +1,51 @@
 <div class="container-fluid">
   <div class="page-header">
     <br>
-    <h5>Create a New Customer</h5>
+    <h5>Customer Details</h5>
   </div>
   <hr>
+
   <div>
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="customerName">
+        <mat-header-cell *matHeaderCellDef> Customer Name </mat-header-cell>
+        <mat-cell *matCellDef="let customer"> {{ customer.firstName }} {{ customer.lastName }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="mobilePhone">
+        <mat-header-cell *matHeaderCellDef> Mobile Phone </mat-header-cell>
+        <mat-cell *matCellDef="let customer"> {{ customer.mobilePhone }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="homePhone">
+        <mat-header-cell *matHeaderCellDef> Home Phone </mat-header-cell>
+        <mat-cell *matCellDef="let customer"> {{ customer.homePhone }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let customer"> {{ customer.email }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="billingAddress">
+        <mat-header-cell *matHeaderCellDef> Billing Address </mat-header-cell>
+        <mat-cell *matCellDef="let customer"> {{ customer.addresses[0].street }}, {{ customer.addresses[0].city }}, {{ customer.addresses[0].zipCode }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+        <mat-cell *matCellDef="let customer"> <button type="button" style="background-color:white; border:0px solid transparent;" class="form-control-sm btn btn-sm" (click)="removeCustomer(customer.customerId)"><img src="../../../assets/cancel.png" style="height: 20px;"></button> </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  <div class="row-sm">
+    <button type="button" style="float: right" class="btn btn-primary btn-sm" (click)="onAdd()"><img src="../../../assets/add.png" style="height: 25px;"></button>
+  </div>  
+  <br />
+  <hr />
+  
+  <div *ngIf="isVisible">
+    <div class="row-sm">
+      <h5>Create a New Customer</h5>
+    </div>
+    <hr>
     <form #customerForm="ngForm" (ngSubmit)="onAddButtonClick(customerForm)">
       <div class="row-sm">Personal Details :</div>
       <div class="form-group col">

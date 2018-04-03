@@ -11,5 +11,7 @@ namespace OrderService.API.Providers
         Task CreateCustomer(CustomerViewModel addedCustomer);
         Task<List<string>> GetAllCustomerNames();
         Task<CustomerViewModel> SearchCustomerByName(string name);
+        Task<List<CustomerViewModel>> GetAllCustomers();
+        Task DeleteCustomer(string customerId);
     }
 }

@@ -25,13 +25,28 @@ export class OrderService {
   }
 
   public getAllOrders(): Observable<OrderDetails[]> {
-    return this.http.get(this.ordersUrl)
+    const url = `${this.ordersUrl}/orders`;
+    return this.http.get(url)
       .map((res: Response) => <OrderDetails[]>res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  public getAllCustomers(): Observable<CustomerDetails[]> {
+    const url = `${this.ordersUrl}/customers`;
+    return this.http.get(url)
+      .map((res: Response) => <CustomerDetails[]>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  public getAllProducts(): Observable<ProductDetails[]> {
+    const url = `${this.ordersUrl}/products`;
+    return this.http.get(url)
+      .map((res: Response) => <ProductDetails[]>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   public getOrderById(id: string): Observable<OrderDetails> {
-    const url = `${this.ordersUrl}/${id}`;
+    const url = `${this.ordersUrl}/orders/${id}`;
     return this.http.get(url)
       .map((res: Response) => <OrderDetails>res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
@@ -89,9 +104,23 @@ export class OrderService {
   }
 
   public DeleteOrder(id: string): Observable<OrderDetails> {
-    const url = `${this.ordersUrl}/${id}`;
+    const url = `${this.ordersUrl}/orders/${id}`;
     return this.http.delete(url, this.options)
       .map((res: Response) => <OrderDetails>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  public DeleteCustomer(id: string): Observable<CustomerDetails> {
+    const url = `${this.ordersUrl}/customers/${id}`;
+    return this.http.delete(url, this.options)
+      .map((res: Response) => <CustomerDetails>res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  public DeleteProduct(id: string): Observable<ProductDetails> {
+    const url = `${this.ordersUrl}/products/${id}`;
+    return this.http.delete(url, this.options)
+      .map((res: Response) => <ProductDetails>res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 

@@ -12,5 +12,7 @@ namespace OrderService.API.Providers
         Task<ProductViewModel> GetProductByName(string productName);
         Task<List<string>> GetAllProductNames();
         Task<List<string>> GetAllProductCategoryNames();
+        Task<List<ProductViewModel>> GetAllProducts();
+        Task DeleteProduct(string productId);
     }
 }

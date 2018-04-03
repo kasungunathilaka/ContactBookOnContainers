@@ -67,6 +67,27 @@ namespace OrderService.API.Providers
 
         }
 
+        public async Task DeleteCustomer(string customerId)
+        {
+            if (customerId != null)
+            {
+                Customer customer = await _dbConext.Customers.FirstOrDefaultAsync(c => c.CustomerId.ToString().Equals(customerId));
+                ContactDetails contactDetails = await _dbConext.ContactDetails.FirstOrDefaultAsync(d => d.CustomerId.ToString().Equals(customerId));
+                List<Address> addresses = await _dbConext.Addresses.Where(a => a.CustomerId.ToString().Equals(customerId)).ToListAsync();
+
+                if (contactDetails != null)
+                {
+                    _dbConext.ContactDetails.Remove(contactDetails);
+                }
+                if (addresses != null)
+                {
+                    _dbConext.Addresses.RemoveRange(addresses);
+                }
+                _dbConext.Customers.Remove(customer);
+                _dbConext.SaveChanges();
+            }
+        }
+
         public async Task<List<string>> GetAllCustomerNames()
         {
             List<string> contactNames = new List<string>();
@@ -85,6 +106,55 @@ namespace OrderService.API.Providers
                 return contactNames;
             }
             return null;
+        }
+
+        public async Task<List<CustomerViewModel>> GetAllCustomers()
+        {
+            List<CustomerViewModel> customersVM = new List<CustomerViewModel>();
+            List<Customer> customers = await _dbConext.Customers.OrderBy(c => c.FirstName).ToListAsync();
+
+            if (customers != null)
+            {
+                foreach (var customer in customers)
+                {
+                    ContactDetails contactDetails = await _dbConext.ContactDetails.FirstOrDefaultAsync(d => d.CustomerId.Equals(customer.CustomerId));
+                    List<Address> addresses = await _dbConext.Addresses.Where(a => a.CustomerId.Equals(customer.CustomerId)).ToListAsync();
+
+                    List<AddressViewModel> addressesVM = new List<AddressViewModel>();
+                    if (addresses != null)
+                    {
+                        foreach (var adderss in addresses)
+                        {
+                            AddressViewModel addressVM = new AddressViewModel
+                            {
+                                AddressId = adderss.AddressId,
+                                Street = adderss.Street,
+                                City = adderss.City,
+                                Province = adderss.Province,
+                                ZipCode = adderss.ZipCode
+                            };
+                            addressesVM.Add(addressVM);
+                        }
+                    }
+
+                    CustomerViewModel customerDetails = new CustomerViewModel
+                    {
+                        CustomerId = customer.CustomerId,
+                        FirstName = customer.FirstName,
+                        LastName = customer.LastName,
+                        Gender = customer.Gender,
+                        Addresses = addressesVM != null ? addressesVM : null,
+                        ContactDetailsId = contactDetails != null ? contactDetails.ContactDetailsId : Guid.Parse(null),
+                        Email = contactDetails != null ? contactDetails.Email : null,
+                        FacebookId = contactDetails != null ? contactDetails.FacebookId : null,
+                        HomePhone = contactDetails != null ? contactDetails.HomePhone : null,
+                        MobilePhone = contactDetails != null ? contactDetails.MobilePhone : null
+                    };
+                    customersVM.Add(customerDetails);
+                }
+                return customersVM;
+            }
+            return null;         
         }
 
         public async Task<CustomerViewModel> SearchCustomerByName(string name)

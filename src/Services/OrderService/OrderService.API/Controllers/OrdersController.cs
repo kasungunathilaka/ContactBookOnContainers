@@ -24,7 +24,7 @@ namespace OrderService.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("orders")]
         public async Task<IActionResult> GetAllOrders()
         {
             try
@@ -45,7 +45,7 @@ namespace OrderService.API.Controllers
             return BadRequest("Could not found any orders.");
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("orders/{id}")]
         public async Task<IActionResult> GetOrderById(string id)
         {
             try
@@ -64,6 +64,48 @@ namespace OrderService.API.Controllers
                 _logger.LogError($"An exception occurred while getting order: {ex.Message}");
             }
             return BadRequest("Could not found any order.");
+        }
+
+        [HttpGet("customers")]
+        public async Task<IActionResult> GetAllCustomers()
+        {
+            try
+            {
+                List<CustomerViewModel> customers = new List<CustomerViewModel>();
+                customers = await _customerService.GetAllCustomers();
+
+                if (customers != null)
+                {
+                    return Ok(customers);
+                }
+                return NotFound("Could not found any customers.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while getting customers: {ex.Message}");
+            }
+            return BadRequest("Could not found any customers.");
+        }
+
+        [HttpGet("products")]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            try
+            {
+                List<ProductViewModel> products = new List<ProductViewModel>();
+                products = await _productService.GetAllProducts();
+
+                if (products != null)
+                {
+                    return Ok(products);
+                }
+                return NotFound("Could not found any products.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while getting products: {ex.Message}");
+            }
+            return BadRequest("Could not found any products.");
         }
 
         [HttpPost("createCustomer")]
@@ -224,7 +266,7 @@ namespace OrderService.API.Controllers
             return BadRequest("Could not found any customer.");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("orders/{id}")]
         public async Task<IActionResult> DeleteOrder(string id)
         {
             try
@@ -237,6 +279,36 @@ namespace OrderService.API.Controllers
                 _logger.LogError($"An exception occurred while deleting the order: {ex.Message}");
             }
             return BadRequest("Failed to delete the order.");
+        }
+
+        [HttpDelete("customers/{id}")]
+        public async Task<IActionResult> DeleteCustomer(string id)
+        {
+            try
+            {
+                await _customerService.DeleteCustomer(id);
+                return Ok("Customer Deleted.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while deleting the customer: {ex.Message}");
+            }
+            return BadRequest("Failed to delete the customer.");
+        }
+
+        [HttpDelete("products/{id}")]
+        public async Task<IActionResult> DeleteProduct(string id)
+        {
+            try
+            {
+                await _productService.DeleteProduct(id);
+                return Ok("Product Deleted.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An exception occurred while deleting the product: {ex.Message}");
+            }
+            return BadRequest("Failed to delete the product.");
         }
 
         [HttpPut("{id}")]

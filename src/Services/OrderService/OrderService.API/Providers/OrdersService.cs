@@ -106,7 +106,7 @@ namespace OrderService.API.Providers
             List<OrderViewModel> ordersVM = new List<OrderViewModel>();
             List<Order> orders = await _dbConext.Orders.OrderBy(o => o.OrderDate).ToListAsync();
 
-            if (orders.Count > 0 && orders != null)
+            if (orders != null)
             {
                 foreach (var order in orders)
                 {                                                                              

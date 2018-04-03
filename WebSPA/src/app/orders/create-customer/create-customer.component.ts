@@ -4,6 +4,7 @@ import { ToastrServices } from '../../shared/services/toastr.service';
 import { NgForm } from '@angular/forms';
 import { CustomerDetails, Address } from '../../shared/models/customer-details';
 import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-create-customer',
@@ -23,11 +24,33 @@ export class CreateCustomerComponent implements OnInit {
   province: string;
   zipCode: string;
   addresses: Address[] = [];
-  provinceNames: string[] = ['Northern', 'North Western', 'Western', 'North Central', 'Central', 'Sabaragamuwa', 'Eastern', 'Uva','Southern'];
+  isVisible: boolean = false;
+  provinceNames: string[] = ['Northern', 'North Western', 'Western', 'North Central', 'Central', 'Sabaragamuwa', 'Eastern', 'Uva', 'Southern'];
+
+  customerDetails: CustomerDetails[] = [];
+  displayedColumns = ['customerName', 'mobilePhone', 'homePhone', 'email', 'billingAddress', 'delete'];
+  dataSource = new MatTableDataSource<CustomerDetails>(this.customerDetails);
 
   constructor(private _orderService: OrderService, private _router: Router, private _toastrService: ToastrServices) { }
 
   ngOnInit() {
+    this.getAllCustomers();
+  }
+
+  getAllCustomers(): void {
+    this._orderService.getAllCustomers()
+      .subscribe(customerDetails => {
+        this.customerDetails = customerDetails;
+        this.dataSource.data = this.customerDetails;
+        //console.log(this.customerDetails);
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  onAdd() {
+    this.isVisible = true;
   }
 
   onAddButtonClick(customerForm: NgForm) {
@@ -48,17 +71,50 @@ export class CreateCustomerComponent implements OnInit {
     addedCustomer.homePhone = customerForm.controls['homePhone'].value;
     addedCustomer.facebookId = customerForm.controls['facebookId'].value;
     addedCustomer.addresses = this.addresses;
+    customerForm.reset();
 
     this._orderService.CreateCustomer(addedCustomer)
       .subscribe(
         result => {
-            //console.log(addedCustomer);
-            this._toastrService.success('Customer Added Successfully.', '');
-            this._router.navigate(['orders']);
+          //console.log(addedCustomer);
+          this._toastrService.success('Customer Added Successfully.', '');
+          this.isVisible = false;
+
+          this._orderService.getAllCustomers()
+            .subscribe(customerDetails => {
+              this.customerDetails = customerDetails;
+              this.dataSource.data = this.customerDetails;
+              //console.log(this.customerDetails);
+            },
+            error => {
+              console.log(error);
+            });
         },
         error => {
           console.log(error);
           this._toastrService.error('Customer Addition Failed.', 'Error');
+        });
+  }
+
+  removeCustomer(id) {
+    this._orderService.DeleteCustomer(id)
+      .subscribe(
+        result => {
+          //console.log('Customer Deleted.');
+          this._orderService.getAllCustomers()
+            .subscribe(customerDetails => {
+              this.customerDetails = customerDetails;
+              this.dataSource.data = this.customerDetails;
+              //console.log(this.customerDetails);
+            },
+            error => {
+              console.log(error);
+            });
+          this._toastrService.success('Customer Deleted Successfully.', '');          
+        },
+        error => {
+          console.log(error);
+          this._toastrService.error('Customer Deletion Failed.', 'Error');
         });
   }
 
