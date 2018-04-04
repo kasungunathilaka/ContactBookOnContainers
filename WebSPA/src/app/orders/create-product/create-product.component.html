@@ -1,53 +1,98 @@
 <div class="container-fluid">
   <div class="page-header">
     <br>
-    <h5>Create a New Product</h5>
+    <h5>Product Details</h5>
   </div>
   <hr>
-  <form #productForm="ngForm" (ngSubmit)="onAddButtonClick(productForm)">
-    <div class="col-sm">Product Details :</div>
-    <div class="col">
+
+  <div>
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="productName">
+        <mat-header-cell *matHeaderCellDef> Product </mat-header-cell>
+        <mat-cell *matCellDef="let product"> {{ product.productName }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="productCategory">
+        <mat-header-cell *matHeaderCellDef> Product Category </mat-header-cell>
+        <mat-cell *matCellDef="let product"> {{ product.productCategoryName }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+        <mat-cell *matCellDef="let product"> {{ product.description }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="unitPrice">
+        <mat-header-cell *matHeaderCellDef> Unit Price </mat-header-cell>
+        <mat-cell *matCellDef="let product"> {{ product.price }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="availability">
+        <mat-header-cell *matHeaderCellDef> Availability </mat-header-cell>
+        <mat-cell *matCellDef="let product">
+          <ng-template [ngIf]="product.isAvailable">In Stocks</ng-template>
+          <ng-template [ngIf]="!product.isAvailable">Out of Stocks</ng-template>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+        <mat-cell *matCellDef="let product"> <button type="button" style="background-color:white; border:0px solid transparent;" class="form-control-sm btn btn-sm" (click)="removeProduct(product.productId)"><img src="../../../assets/cancel.png" style="height: 20px;"></button> </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  <div class="row-sm">
+    <button type="button" style="float: right" class="btn btn-primary btn-sm" (click)="onAdd()"><img src="../../../assets/add.png" style="height: 25px;"></button>
+  </div>
+  <br />
+  <hr />
+
+  <div *ngIf="isVisible">
+    <div class="row-sm">
+      <h5>Create a New Product</h5>
+    </div>
+    <hr>
+    <form #productForm="ngForm" (ngSubmit)="onAddButtonClick(productForm)">
+      <div class="col-sm">Product Details :</div>
       <div class="col">
-        <div class="form-group row">
-          <div class="col">
-            <label class="col-form-label col-form-label-sm">Product Name</label>
-            <input type="text" class="form-control form-control-sm" id="productName" name="productName" [(ngModel)]="productName" placeholder="Product Name" required>
-          </div>
-          <div class="col">
-            <label class="col-form-label col-form-label-sm">Product Category</label>
-            <!--<input type="text" class="form-control form-control-sm" id="productCategory" name="productCategory" [(ngModel)]="productCategory" placeholder="Product Category">-->
-            <tag-input class="form-control-sm" [(ngModel)]="productCategory" id="productCategory" theme='dark' name="productCategory" [secondaryPlaceholder]="'Product Category'" [maxItems]='1'>
-              <tag-input-dropdown [autocompleteItems]=productCategoryNames>
-              </tag-input-dropdown>
-            </tag-input>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="col-form-label col-form-label-sm">Description</label>
-          <textarea rows="4" class="form-control  form-control-sm" id="street" name="description" [(ngModel)]="description" placeholder="Product Description"></textarea>
-        </div>
-
-        <div class="form-group row">
-          <div class="col">
-            <label class="col-form-label col-form-label-sm">Unit Price</label>
-            <input type="text" class="form-control form-control-sm" id="price" name="price" [(ngModel)]="price" placeholder="Unit Price">
-          </div>
-          <div class="col">
-            <label class="col-form-label col-form-label-sm">Availability</label>
-            <br />
+        <div class="col">
+          <div class="form-group row">
             <div class="col">
-              <input type="checkbox" class="form-check-input" id="isAvailable" name="isAvailable" [(ngModel)]="isAvailable">
-              <label class="form-check-label" for="isAvailable">Is Available</label>
+              <label class="col-form-label col-form-label-sm">Product Name</label>
+              <input type="text" class="form-control form-control-sm" id="productName" name="productName" [(ngModel)]="productName" placeholder="Product Name" required>
+            </div>
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Product Category</label>
+              <!--<input type="text" class="form-control form-control-sm" id="productCategory" name="productCategory" [(ngModel)]="productCategory" placeholder="Product Category">-->
+              <tag-input class="form-control-sm" [(ngModel)]="productCategory" id="productCategory" theme='dark' name="productCategory" [secondaryPlaceholder]="'Product Category'" [maxItems]='1'>
+                <tag-input-dropdown [autocompleteItems]=productCategoryNames>
+                </tag-input-dropdown>
+              </tag-input>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-form-label col-form-label-sm">Description</label>
+            <textarea rows="4" class="form-control  form-control-sm" id="street" name="description" [(ngModel)]="description" placeholder="Product Description"></textarea>
+          </div>
+
+          <div class="form-group row">
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Unit Price</label>
+              <input type="text" class="form-control form-control-sm" id="price" name="price" [(ngModel)]="price" placeholder="Unit Price">
+            </div>
+            <div class="col">
+              <label class="col-form-label col-form-label-sm">Availability</label>
+              <br />
+              <div class="col">
+                <input type="checkbox" class="form-check-input" id="isAvailable" name="isAvailable" [(ngModel)]="isAvailable">
+                <label class="form-check-label" for="isAvailable">Is Available</label>
+              </div>
             </div>
           </div>
         </div>
+        <button type="submit" style="float: right" class="btn btn-primary btn-sm"><img src="../../../assets/add.png" style="height: 20px;">&nbsp; Create Product</button>
       </div>
-      <button type="submit" style="float: right" class="btn btn-primary btn-sm"><img src="../../../assets/add.png" style="height: 20px;">&nbsp; Create Product</button>
-    </div>
 
-  </form>
+    </form>
+  </div>
 </div>
-
 
 

@@ -24,9 +24,9 @@ export class CreateCustomerComponent implements OnInit {
   province: string;
   zipCode: string;
   addresses: Address[] = [];
-  isVisible: boolean = false;
   provinceNames: string[] = ['Northern', 'North Western', 'Western', 'North Central', 'Central', 'Sabaragamuwa', 'Eastern', 'Uva', 'Southern'];
 
+  isVisible: boolean = false;
   customerDetails: CustomerDetails[] = [];
   displayedColumns = ['customerName', 'mobilePhone', 'homePhone', 'email', 'billingAddress', 'delete'];
   dataSource = new MatTableDataSource<CustomerDetails>(this.customerDetails);

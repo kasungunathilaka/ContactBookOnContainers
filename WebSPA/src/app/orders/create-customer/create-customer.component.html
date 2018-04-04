@@ -8,7 +8,7 @@
   <div>
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="customerName">
-        <mat-header-cell *matHeaderCellDef> Customer Name </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Customer </mat-header-cell>
         <mat-cell *matCellDef="let customer"> {{ customer.firstName }} {{ customer.lastName }} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="mobilePhone">
