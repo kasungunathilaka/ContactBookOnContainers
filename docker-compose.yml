@@ -8,10 +8,10 @@ services:
       dockerfile: src/Services/ContactService/ContactService.API/Dockerfile
     ports:
       - "5103:80"
-    depends_on:
-      - rabbitmq
   #  depends_on:
   #    - sql.data
+  #    - rabbitmq
+      
 
   #sql.data:
   #  image: microsoft/mssql-server-linux:2017-latest
@@ -19,7 +19,7 @@ services:
   #    SA_PASSWORD: "Qweasd123"
   #    ACCEPT_EULA: "Y"
   #  ports:
-  #    - "5434:1433"
+  #    - "5433:1433"
 
   #webspa:
   #  image: contactbook/webspa:${TAG:-latest}
@@ -36,10 +36,10 @@ services:
       dockerfile: src/Services/OrderService/OrderService.API/Dockerfile
     ports:
       - "5104:80"
-    depends_on:
-      - rabbitmq
   #  depends_on:
   #    - sql.data
+  #    - rabbitmq
+     
 
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
+  #rabbitmq:
+  #  image: rabbitmq:3-management-alpine

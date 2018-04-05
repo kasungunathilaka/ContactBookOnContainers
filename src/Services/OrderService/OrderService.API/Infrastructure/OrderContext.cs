@@ -86,7 +86,7 @@ namespace OrderService.API.Infrastructure
             public OrderContext CreateDbContext(string[] args)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<OrderContext>()
-                    .UseSqlServer("Server=tcp:10.0.75.1,5434;Initial Catalog=OrdersDb;User Id=sa;Password=Qweasd123");
+                    .UseSqlServer("Server=tcp:10.0.75.1,5433;Initial Catalog=OrdersDb;User Id=sa;Password=Qweasd123");
 
                 //var optionsBuilder = new DbContextOptionsBuilder<OrderContext>()
                   //  .UseSqlServer("Server=KASUNG-LAP\\SQLEXPRESS;Initial Catalog=OrdersDb;;Integrated Security=True");
