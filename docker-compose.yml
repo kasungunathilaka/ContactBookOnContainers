@@ -8,6 +8,8 @@ services:
       dockerfile: src/Services/ContactService/ContactService.API/Dockerfile
     ports:
       - "5103:80"
+    depends_on:
+      - rabbitmq
   #  depends_on:
   #    - sql.data
 
@@ -34,5 +36,10 @@ services:
       dockerfile: src/Services/OrderService/OrderService.API/Dockerfile
     ports:
       - "5104:80"
+    depends_on:
+      - rabbitmq
   #  depends_on:
   #    - sql.data
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
