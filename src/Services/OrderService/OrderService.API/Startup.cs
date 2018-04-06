@@ -16,7 +16,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OrderService.API.Infrastructure;
 using OrderService.API.Infrastructure.Filters;
+using OrderService.API.Messaging;
 using OrderService.API.Providers;
+using OrderService.API.Settings;
 
 namespace OrderService.API
 {
@@ -84,6 +86,9 @@ namespace OrderService.API
             services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IMessageQ, MessageQ>();
+
+            services.Configure<MqSettings>(Configuration.GetSection("MqSettings"));
 
             var container = new ContainerBuilder();
             container.Populate(services);

@@ -9,6 +9,8 @@ using Autofac.Extensions.DependencyInjection;
 using ContactService.API.ContactProviders;
 using ContactService.API.Infrastructure;
 using ContactService.API.Infrastructure.Filters;
+using ContactService.API.Messaging;
+using ContactService.API.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -83,6 +85,9 @@ namespace ContactService.API
             });
 
             services.AddTransient<IContactsService, ContactsService>();
+            services.AddSingleton<IMessageQ, MessageQ>();
+
+            services.Configure<MqSettings>(Configuration.GetSection("MqSettings"));
 
             var container = new ContainerBuilder();
             container.Populate(services);
@@ -106,6 +111,12 @@ namespace ContactService.API
               {
                   c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContactService.API V1");
               });
+
+            var eventbus = app.ApplicationServices.GetRequiredService<IMessageQ>();
+            while (true)
+            {
+                eventbus.ConsumeMessage();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OrderService.API.Infrastructure;
+using OrderService.API.Messaging;
 using OrderService.API.Models;
 using OrderService.API.ViewModels;
 using System;
@@ -12,11 +13,13 @@ namespace OrderService.API.Providers
     public class CustomerService: ICustomerService
     {
         private OrderContext _dbConext;
+        private IMessageQ _messageQ;
         private Guid _customerGuid, _contactDetailsGuid;
 
-        public CustomerService(OrderContext dbContext)
+        public CustomerService(OrderContext dbContext, IMessageQ messageQ)
         {
             _dbConext = dbContext;
+            _messageQ = messageQ;
         }
 
         public async Task CreateCustomer(CustomerViewModel addedCustomer)
@@ -65,6 +68,7 @@ namespace OrderService.API.Providers
             await _dbConext.Addresses.AddRangeAsync(addresses);
             _dbConext.SaveChanges();
 
+            _messageQ.SendMessage(addedCustomer);                        
         }
 
         public async Task DeleteCustomer(string customerId)

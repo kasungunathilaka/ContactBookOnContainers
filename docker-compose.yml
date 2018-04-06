@@ -3,6 +3,10 @@ version: '3'
 services:
   contactservice.api:
     image: contactbook/contactservice.api:${TAG:-latest}
+    environment:
+      - OMS_MQ_USERNAME=oms
+      - OMS_MQ_PASSWORD=password
+      - OMS_MQ_SERVER=OrderManagementSystemMQ
     build:
       context: .
       dockerfile: src/Services/ContactService/ContactService.API/Dockerfile
@@ -31,6 +35,10 @@ services:
 
   orderservice.api:
     image: contactbook/orderservice.api:${TAG:-latest}
+    environment:
+      - OMS_MQ_USERNAME=oms
+      - OMS_MQ_PASSWORD=password
+      - OMS_MQ_SERVER=OrderManagementSystemMQ
     build:
       context: .
       dockerfile: src/Services/OrderService/OrderService.API/Dockerfile
@@ -41,5 +49,14 @@ services:
   #    - rabbitmq
      
 
-  #rabbitmq:
-  #  image: rabbitmq:3-management-alpine
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: OrderManagementSystemMQ
+    hostname: OrderManagementSystemMQ
+    ports:
+        - 15672:15672
+        - 5671:5671
+        - 5672:5672
+    environment:
+        - RABBITMQ_DEFAULT_USER=oms
+        - RABBITMQ_DEFAULT_PASS=password
