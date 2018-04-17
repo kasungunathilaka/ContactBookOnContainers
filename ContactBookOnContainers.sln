@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Health
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{7FF83006-50D9-4348-B711-F26E5D393765}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBusRabbitMQ", "src\BuildingBlocks\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{20C3E14A-4CE4-4572-B12C-DCBCAE07DBBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Events", "src\BuildingBlocks\EventBus\EventBusRabbitMQ\Events.csproj", "{20C3E14A-4CE4-4572-B12C-DCBCAE07DBBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

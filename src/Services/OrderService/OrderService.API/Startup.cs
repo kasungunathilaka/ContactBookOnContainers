@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using MassTransit;
+using MassTransit.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +18,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OrderService.API.Infrastructure;
 using OrderService.API.Infrastructure.Filters;
-using OrderService.API.Messaging;
+//using OrderService.API.Messaging;
 using OrderService.API.Providers;
 using OrderService.API.Settings;
+using RabbitMQ.Client;
 
 namespace OrderService.API
 {
@@ -28,6 +31,8 @@ namespace OrderService.API
         {
             Configuration = configuration;
         }
+
+        public IContainer ApplicationContainer { get; private set; }
 
         public IConfiguration Configuration { get; }
 
@@ -86,17 +91,36 @@ namespace OrderService.API
             services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IMessageQ, MessageQ>();
-
-            services.Configure<MqSettings>(Configuration.GetSection("MqSettings"));
+            //services.AddTransient<IMessageQ, MessageQ>();
+            //services.Configure<MqSettings>(Configuration.GetSection("MqSettings"));
 
             var container = new ContainerBuilder();
+            container.Register( c =>
+            {
+                return Bus.Factory.CreateUsingRabbitMq(sbc =>
+                {
+                    sbc.Host("rabbitmq", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+
+                    sbc.ExchangeType = ExchangeType.Fanout;
+                });
+            })
+            .As<IBusControl>()
+            .As<IBus>()
+            .As<IPublishEndpoint>()
+            .SingleInstance();
+
             container.Populate(services);
-            return new AutofacServiceProvider(container.Build());
+            ApplicationContainer = container.Build();
+
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -112,6 +136,10 @@ namespace OrderService.API
               {
                   c.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderService.API V1");
               });
+
+            var bus = ApplicationContainer.Resolve<IBusControl>();
+            var busHandle = TaskUtil.Await(() => bus.StartAsync());
+            lifetime.ApplicationStopping.Register(() => busHandle.Stop());
         }
     }
 }

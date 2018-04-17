@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+      convert
+    kompose.version: 1.11.0 (39ad614)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: orderserviceapi
+  name: orderserviceapi
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: orderserviceapi
+    spec:
+      containers:
+      - env:
+        - name: OMS_MQ_PASSWORD
+          value: password
+        - name: OMS_MQ_SERVER
+          value: ordermanagementsystemmq
+        - name: OMS_MQ_USERNAME
+          value: oms
+        image: contactbook/orderserviceapi:latest
+        name: orderserviceapi
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}

@@ -9,8 +9,11 @@ using Autofac.Extensions.DependencyInjection;
 using ContactService.API.ContactProviders;
 using ContactService.API.Infrastructure;
 using ContactService.API.Infrastructure.Filters;
-using ContactService.API.Messaging;
+using ContactService.API.Messaging.Consumer;
+//using ContactService.API.Messaging;
 using ContactService.API.Settings;
+using MassTransit;
+using MassTransit.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +32,8 @@ namespace ContactService.API
         {
             Configuration = configuration;
         }
+
+        public IContainer ApplicationContainer { get; private set; }
 
         public IConfiguration Configuration { get; }
 
@@ -85,17 +90,45 @@ namespace ContactService.API
             });
 
             services.AddTransient<IContactsService, ContactsService>();
-            services.AddSingleton<IMessageQ, MessageQ>();
+            //services.AddSingleton<IMessageQ, MessageQ>();
 
-            services.Configure<MqSettings>(Configuration.GetSection("MqSettings"));
+            //services.Configure<MqSettings>(Configuration.GetSection("MqSettings"));
 
             var container = new ContainerBuilder();
+
+            container.RegisterType<CustomerUpdateEventConsumer>();
+
+            container.Register(context =>
+                {
+                    var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+                    {
+                        var host = cfg.Host(new Uri("rabbitmq://rabbitmq/"), h =>
+                        {
+                            h.Username("guest");
+                            h.Password("guest");
+                        });
+
+                        cfg.ReceiveEndpoint(host, "customer_queue", e =>
+                        {
+                            e.LoadFrom(context);
+                            //e.Consumer<CustomerUpdateEventConsumer>();
+                        });
+                    });
+
+                    return busControl;
+                })
+                .SingleInstance()
+                .As<IBusControl>()
+                .As<IBus>();
+
             container.Populate(services);
-            return new AutofacServiceProvider(container.Build());
+            ApplicationContainer = container.Build();
+
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ContactBookContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -112,11 +145,23 @@ namespace ContactService.API
                   c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContactService.API V1");
               });
 
-            var eventbus = app.ApplicationServices.GetRequiredService<IMessageQ>();
-            while (true)
-            {
-                eventbus.ConsumeMessage();
-            }
+            var bus = ApplicationContainer.Resolve<IBusControl>();
+            var busHandle = TaskUtil.Await(() => bus.StartAsync());
+            lifetime.ApplicationStopping.Register(() => busHandle.Stop());
+            //ConfigureEventBus(app);
+
         }
+
+
+        //private void ConfigureEventBus(IApplicationBuilder app)
+        //{
+        //    var eventbus = app.ApplicationServices.GetRequiredService<IMessageQ>();
+        //    var lifeTime = app.ApplicationServices.GetRequiredService<ILifetimeScope>();
+            
+        //    while (true)
+        //    {
+        //        eventbus.ConsumeMessage();
+        //    }
+        //}
     }
 }

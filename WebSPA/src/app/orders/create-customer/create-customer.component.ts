@@ -23,7 +23,6 @@ export class CreateCustomerComponent implements OnInit {
   city: string;
   province: string;
   zipCode: string;
-  addresses: Address[] = [];
   provinceNames: string[] = ['Northern', 'North Western', 'Western', 'North Central', 'Central', 'Sabaragamuwa', 'Eastern', 'Uva', 'Southern'];
 
   isVisible: boolean = false;
@@ -54,13 +53,14 @@ export class CreateCustomerComponent implements OnInit {
   }
 
   onAddButtonClick(customerForm: NgForm) {
-    var address = new Address();
+    let addresses = new Array<Address>();
+    let address = new Address();
     address.street = customerForm.controls['street'].value;
     address.city = customerForm.controls['city'].value;
     address.province = customerForm.controls['province'].value;
     address.zipCode = customerForm.controls['zipcode'].value;
 
-    this.addresses.push(address);
+    addresses.push(address);
 
     var addedCustomer = new CustomerDetails();
     addedCustomer.firstName = customerForm.controls['firstName'].value;
@@ -70,7 +70,7 @@ export class CreateCustomerComponent implements OnInit {
     addedCustomer.mobilePhone = customerForm.controls['mobilePhone'].value;
     addedCustomer.homePhone = customerForm.controls['homePhone'].value;
     addedCustomer.facebookId = customerForm.controls['facebookId'].value;
-    addedCustomer.addresses = this.addresses;
+    addedCustomer.addresses = addresses;
     customerForm.reset();
 
     this._orderService.CreateCustomer(addedCustomer)

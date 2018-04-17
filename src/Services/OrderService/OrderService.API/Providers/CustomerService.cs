@@ -1,74 +1,91 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using OrderService.API.Infrastructure;
-using OrderService.API.Messaging;
+//using OrderService.API.Messaging;
 using OrderService.API.Models;
 using OrderService.API.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Events;
 
 namespace OrderService.API.Providers
 {
     public class CustomerService: ICustomerService
     {
         private OrderContext _dbConext;
-        private IMessageQ _messageQ;
+        //private IMessageQ _messageQ;
+        private readonly IBus _bus;
         private Guid _customerGuid, _contactDetailsGuid;
 
-        public CustomerService(OrderContext dbContext, IMessageQ messageQ)
+        //public CustomerService(OrderContext dbContext, IMessageQ messageQ)
+        //{
+        //    _dbConext = dbContext;
+        //    _messageQ = messageQ;
+        //}
+
+        public CustomerService(OrderContext dbContext, IBus bus)
         {
             _dbConext = dbContext;
-            _messageQ = messageQ;
+            _bus = bus;
         }
 
         public async Task CreateCustomer(CustomerViewModel addedCustomer)
         {
-            _customerGuid = Guid.NewGuid();
-            _contactDetailsGuid = Guid.NewGuid();
-
-            List<Address> addresses = new List<Address>();
-            if (addedCustomer.Addresses != null)
+            if (addedCustomer != null)
             {
-                foreach (var addressVM in addedCustomer.Addresses)
+                _customerGuid = Guid.NewGuid();
+                _contactDetailsGuid = Guid.NewGuid();
+
+                List<Address> addresses = new List<Address>();
+                if (addedCustomer.Addresses != null && addedCustomer.Addresses.Count > 0)
                 {
-                    Address address = new Address
+                    foreach (var addressVM in addedCustomer.Addresses)
                     {
-                        AddressId = Guid.NewGuid(),
-                        Street = addressVM.Street,
-                        City = addressVM.City,
-                        Province = addressVM.Province,
-                        ZipCode = addressVM.ZipCode,
-                        CustomerId = _customerGuid
-                    };
-                    addresses.Add(address);
+                        Address address = new Address
+                        {
+                            AddressId = Guid.NewGuid(),
+                            Street = addressVM.Street,
+                            City = addressVM.City,
+                            Province = addressVM.Province,
+                            ZipCode = addressVM.ZipCode,
+                            CustomerId = _customerGuid
+                        };
+                        addresses.Add(address);
+                    }
                 }
+
+                ContactDetails contactDetails = new ContactDetails
+                {
+                    ContactDetailsId = _contactDetailsGuid,
+                    CustomerId = _customerGuid,
+                    Email = addedCustomer.Email,
+                    FacebookId = addedCustomer.FacebookId,
+                    MobilePhone = addedCustomer.MobilePhone,
+                    HomePhone = addedCustomer.HomePhone
+                };
+
+                Customer customer = new Customer
+                {
+                    CustomerId = _customerGuid,
+                    FirstName = addedCustomer.FirstName,
+                    LastName = addedCustomer.LastName,
+                    Gender = addedCustomer.Gender
+                };
+
+                await _dbConext.Customers.AddAsync(customer);
+                await _dbConext.ContactDetails.AddAsync(contactDetails);
+                await _dbConext.Addresses.AddRangeAsync(addresses);
+                
+                //var endpoint = await _bus.GetSendEndpoint(new Uri("rabbitmq://rabbitmq/customer_queue"));  //?bind=true&queue=customer_queue
+                //await endpoint.Send<CustomerUpdateEvent>(new { addedCustomer });
+                await _bus.Publish<CustomerUpdateEvent>(new { addedCustomer });
+
+                //_messageQ.SendMessage(addedCustomer); 
+                _dbConext.SaveChanges();
             }
 
-            ContactDetails contactDetails = new ContactDetails
-            {
-                ContactDetailsId = _contactDetailsGuid,
-                CustomerId = _customerGuid,
-                Email = addedCustomer.Email,
-                FacebookId = addedCustomer.FacebookId,
-                MobilePhone = addedCustomer.MobilePhone,
-                HomePhone = addedCustomer.HomePhone
-            };
-
-            Customer customer = new Customer
-            {
-                CustomerId = _customerGuid,
-                FirstName = addedCustomer.FirstName,
-                LastName = addedCustomer.LastName,
-                Gender = addedCustomer.Gender
-            };
-
-            await _dbConext.Customers.AddAsync(customer);
-            await _dbConext.ContactDetails.AddAsync(contactDetails);
-            await _dbConext.Addresses.AddRangeAsync(addresses);
-            _dbConext.SaveChanges();
-
-            _messageQ.SendMessage(addedCustomer);                        
         }
 
         public async Task DeleteCustomer(string customerId)

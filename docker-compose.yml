@@ -1,23 +1,23 @@
 version: '3'
 
 services:
-  contactservice.api:
-    image: contactbook/contactservice.api:${TAG:-latest}
-    environment:
-      - OMS_MQ_USERNAME=oms
-      - OMS_MQ_PASSWORD=password
-      - OMS_MQ_SERVER=OrderManagementSystemMQ
+  contactserviceapi:
+    image: contactbook/contactserviceapi:${TAG:-latest}
+    #environment:
+    #  - OMS_MQ_USERNAME=oms
+    #  - OMS_MQ_PASSWORD=password
+    #  - OMS_MQ_SERVER=ordermanagementsystemmq
     build:
       context: .
       dockerfile: src/Services/ContactService/ContactService.API/Dockerfile
     ports:
       - "5103:80"
-  #  depends_on:
-  #    - sql.data
-  #    - rabbitmq
+    depends_on:
+      - rabbitmq
+    #  - sqldata
       
 
-  #sql.data:
+  #sqldata:
   #  image: microsoft/mssql-server-linux:2017-latest
   #  environment:
   #    SA_PASSWORD: "Qweasd123"
@@ -33,30 +33,42 @@ services:
   #  ports:
   #   - "5102:80"
 
-  orderservice.api:
-    image: contactbook/orderservice.api:${TAG:-latest}
-    environment:
-      - OMS_MQ_USERNAME=oms
-      - OMS_MQ_PASSWORD=password
-      - OMS_MQ_SERVER=OrderManagementSystemMQ
+  orderserviceapi:
+    image: contactbook/orderserviceapi:${TAG:-latest}
+    #environment:
+    #  - OMS_MQ_USERNAME=oms
+    #  - OMS_MQ_PASSWORD=password
+    #  - OMS_MQ_SERVER=ordermanagementsystemmq
     build:
       context: .
       dockerfile: src/Services/OrderService/OrderService.API/Dockerfile
     ports:
       - "5104:80"
-  #  depends_on:
-  #    - sql.data
-  #    - rabbitmq
-     
+    depends_on:
+      - rabbitmq
+    #  - sqldata
+         
+
+  #rabbitmq:
+  #  image: rabbitmq:3-management-alpine
+  #  container_name: ordermanagementsystemmq
+  #  hostname: ordermanagementsystemmq
+  #  ports:
+  #      - 15672:15672
+  #      - 5671:5671
+  #      - 5672:5672
+  #  environment:
+  #      - RABBITMQ_DEFAULT_USER=oms
+  #      - RABBITMQ_DEFAULT_PASS=password
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
-    container_name: OrderManagementSystemMQ
-    hostname: OrderManagementSystemMQ
+    container_name: rabbitmq
+    hostname: rabbitmq
     ports:
         - 15672:15672
         - 5671:5671
         - 5672:5672
     environment:
-        - RABBITMQ_DEFAULT_USER=oms
-        - RABBITMQ_DEFAULT_PASS=password
+        - RABBITMQ_DEFAULT_USER=guest
+        - RABBITMQ_DEFAULT_PASS=guest

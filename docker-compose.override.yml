@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  contactservice.api:
+  contactserviceapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "5103:80"
 
-  #sql.data:
+  #sqldata:
   #  environment:
   #    - SA_PASSWORD=Qweasd123
   #    - ACCEPT_EULA=Y
@@ -20,7 +20,7 @@ services:
   #  ports:
   #   - "5102:80"
 
-  orderservice.api:
+  orderserviceapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
