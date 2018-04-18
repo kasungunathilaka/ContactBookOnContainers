@@ -7,8 +7,8 @@ metadata:
     kompose.version: 1.11.0 (39ad614)
   creationTimestamp: null
   labels:
-    io.kompose.service: rabbitmq
-  name: rabbitmq
+    io.kompose.service: webspa
+  name: webspa
 spec:
   replicas: 1
   strategy: {}
@@ -16,20 +16,13 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: rabbitmq
+        io.kompose.service: webspa
     spec:
       containers:
-      - env:
-        - name: RABBITMQ_DEFAULT_PASS
-          value: guest
-        - name: RABBITMQ_DEFAULT_USER
-          value: guest
-        image: rabbitmq:3-management-alpine
-        name: rabbitmq
+      - image: kasungunathilaka/webspa:dev
+        name: webspa
         ports:
-        - containerPort: 15672
-        - containerPort: 5671
-        - containerPort: 5672
+        - containerPort: 80
         resources: {}
       restartPolicy: Always
 status: {}

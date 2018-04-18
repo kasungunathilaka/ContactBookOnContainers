@@ -20,13 +20,9 @@ spec:
     spec:
       containers:
       - env:
-        - name: OMS_MQ_PASSWORD
-          value: password
-        - name: OMS_MQ_SERVER
-          value: ordermanagementsystemmq
-        - name: OMS_MQ_USERNAME
-          value: oms
-        image: contactbook/orderserviceapi:latest
+        - name: ConnectionString
+          value: "Server=tcp:172.20.3.85,31433;Initial Catalog=OrdersDb;User Id=sa;Password=Qweasd123"
+        image: kasungunathilaka/orderserviceapi:dev
         name: orderserviceapi
         ports:
         - containerPort: 80

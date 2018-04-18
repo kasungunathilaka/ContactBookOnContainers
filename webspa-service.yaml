@@ -7,14 +7,14 @@ metadata:
     kompose.version: 1.11.0 (39ad614)
   creationTimestamp: null
   labels:
-    io.kompose.service: sqldata
-  name: sqldata
+    io.kompose.service: webspa
+  name: webspa
 spec:
-  type: NodePort
   ports:
-  - port: 1433
-    nodePort: 31433
+  - name: "5102"
+    port: 5102
+    targetPort: 80
   selector:
-    io.kompose.service: sqldata
+    io.kompose.service: webspa
 status:
   loadBalancer: {}

@@ -27,11 +27,11 @@ services:
 
   #webspa:
   #  image: contactbook/webspa:${TAG:-latest}
-  # build:
-  #   context: .
-  #   dockerfile: WebSPA/Dockerfile
+  #  build:
+  #    context: .
+  #    dockerfile: WebSPA/Dockerfile
   #  ports:
-  #   - "5102:80"
+  #    - "5102:80"
 
   orderserviceapi:
     image: contactbook/orderserviceapi:${TAG:-latest}
@@ -66,9 +66,9 @@ services:
     container_name: rabbitmq
     hostname: rabbitmq
     ports:
-        - 15672:15672
-        - 5671:5671
-        - 5672:5672
+      - 15672:15672
+      - 5671:5671
+      - 5672:5672
     environment:
-        - RABBITMQ_DEFAULT_USER=guest
-        - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
