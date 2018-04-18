@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Events;
+using Newtonsoft.Json;
 
 namespace OrderService.API.Providers
 {
@@ -77,10 +78,11 @@ namespace OrderService.API.Providers
                 await _dbConext.Customers.AddAsync(customer);
                 await _dbConext.ContactDetails.AddAsync(contactDetails);
                 await _dbConext.Addresses.AddRangeAsync(addresses);
-                
+
+                string customerData = JsonConvert.SerializeObject(addedCustomer);
                 //var endpoint = await _bus.GetSendEndpoint(new Uri("rabbitmq://rabbitmq/customer_queue"));  //?bind=true&queue=customer_queue
-                //await endpoint.Send<CustomerUpdateEvent>(new { addedCustomer });
-                await _bus.Publish<CustomerUpdateEvent>(new { addedCustomer });
+                //await endpoint.Send<CustomerUpdateEvent>(new { customerData });
+                await _bus.Publish<CustomerUpdateEvent>(new { Customer = customerData });
 
                 //_messageQ.SendMessage(addedCustomer); 
                 _dbConext.SaveChanges();

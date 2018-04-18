@@ -7,11 +7,11 @@ namespace Events
 {
     public class CustomerUpdateEvent 
     {
-        public CustomerViewModel Customer { get; }
+        public string Customer { get; set; }
 
-        public CustomerUpdateEvent(CustomerViewModel addedCustomer)
-        {
-            Customer = addedCustomer;
-        }
+        //public CustomerUpdateEvent(string addedCustomer)
+        //{
+        //    Customer = addedCustomer;
+        //}
     }
 }

@@ -2,6 +2,7 @@
 using ContactService.API.ViewModels;
 using Events;
 using MassTransit;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace ContactService.API.Messaging.Consumer
 
         public async Task Consume(ConsumeContext<CustomerUpdateEvent> context)
         {
-            var customer = context.Message.Customer;
+            var customer = JsonConvert.DeserializeObject<CustomerViewModel>(context.Message.Customer);
 
             if (customer != null)
             {
