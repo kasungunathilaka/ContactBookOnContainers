@@ -1,0 +1,4 @@
+{
+  "contacts_host_port": "172.20.3.94:32103",
+  "orders_host_port": "172.20.3.94:32104"
+}

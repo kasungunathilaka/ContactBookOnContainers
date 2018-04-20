@@ -7,8 +7,8 @@ metadata:
     kompose.version: 1.11.0 (39ad614)
   creationTimestamp: null
   labels:
-    io.kompose.service: orderserviceapi
-  name: orderserviceapi
+    io.kompose.service: webspa
+  name: webspa
 spec:
   replicas: 1
   strategy: {}
@@ -16,14 +16,16 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: orderserviceapi
+        io.kompose.service: webspa
     spec:
       containers:
       - env:
-        - name: ConnectionString
-          value: "Server=tcp:172.20.3.85,31433;Initial Catalog=OrdersDb;User Id=sa;Password=Qweasd123"
-        image: kasungunathilaka/orderserviceapi:dev
-        name: orderserviceapi
+        - name: orders_host_port
+          value: "172.20.3.94:32104"
+        - name: contacts_host_port
+          value: "172.20.3.94:32103"
+        image: kasungunathilaka/webspa:test
+        name: webspa
         ports:
         - containerPort: 80
         resources: {}

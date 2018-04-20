@@ -7,14 +7,14 @@ metadata:
     kompose.version: 1.11.0 (39ad614)
   creationTimestamp: null
   labels:
-    io.kompose.service: orderserviceapi
-  name: orderserviceapi
+    io.kompose.service: contactserviceapi
+  name: contactserviceapi
 spec:
+  type: NodePort
   ports:
-  - name: "5104"
-    port: 5104
-    targetPort: 80
+  - port: 80
+    nodePort: 32103
   selector:
-    io.kompose.service: orderserviceapi
+    io.kompose.service: contactserviceapi
 status:
   loadBalancer: {}

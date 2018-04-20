@@ -10,10 +10,10 @@ metadata:
     io.kompose.service: webspa
   name: webspa
 spec:
+  type: NodePort
   ports:
-  - name: "5102"
-    port: 5102
-    targetPort: 80
+  - port: 80
+    nodePort: 32102
   selector:
     io.kompose.service: webspa
 status:
