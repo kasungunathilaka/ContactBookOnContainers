@@ -21,13 +21,13 @@ namespace ContactService.API.Messaging.Consumer
 
         public async Task Consume(ConsumeContext<CustomerUpdateEvent> context)
         {
-            var customer = JsonConvert.DeserializeObject<CustomerViewModel>(context.Message.Customer);
-
-            if (customer != null)
+            if (context.Message.Customer != null)
             {
+                var customer = JsonConvert.DeserializeObject<CustomerViewModel>(context.Message.Customer);
+
                 ContactViewModel contactViewModel = new ContactViewModel()
                 {
-                    CustomerId = customer.CustomerId.ToString(),
+                    //CustomerId = customer.CustomerId.ToString(),
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
                     Gender = customer.Gender,
@@ -35,7 +35,7 @@ namespace ContactService.API.Messaging.Consumer
                     MobilePhone = customer.MobilePhone,
                     HomePhone = customer.HomePhone,
                     FacebookId = customer.FacebookId,
-                    ContactDetailsId = customer.ContactDetailsId.ToString(),
+                    //ContactDetailsId = customer.ContactDetailsId.ToString(),
                     Street = customer.Addresses.ElementAt(0) != null ? customer.Addresses.ElementAtOrDefault(0).Street : null,
                     City = customer.Addresses.ElementAt(0) != null ? customer.Addresses.ElementAtOrDefault(0).City : null,
                     Province = customer.Addresses.ElementAt(0) != null ? customer.Addresses.ElementAtOrDefault(0).Province : null,
