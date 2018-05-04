@@ -8,7 +8,7 @@ import {
   NavItem,
   NavLink } from 'reactstrap';
 
- export class OrderNavBar extends React.Component {
+ export class ContactNavBar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,21 +28,15 @@ import {
     return (
       <div id="navBar">
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/orders">Order Management System</NavbarBrand>
+        <NavbarBrand href="/orders">Home</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink href="/orders/orders">Orders</NavLink>
+              <NavLink href="/contacts/contacts">Contacts</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/orders/customers">Customers</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/orders/products">Products</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/contacts">Contact Details</NavLink>
+              <NavLink href="/contacts/addContact">Create Contacts</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

@@ -29,7 +29,7 @@ function CustomerTable(props) {
   for (let index = 0; index < data.length; index++) {   
     details.push(createDetails(data[index].firstName + ' ' + data[index].lastName, data[index].email, data[index].mobilePhone, data[index].homePhone, data[index].addresses[0].street +', '+ data[index].addresses[0].city +', '+ data[index].addresses[0].zipCode));
   }
-  //console.log(details);
+  //console.log(props);
 
   return (
       <div className="container-fluid">

@@ -1,7 +1,15 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, Col } from 'reactstrap';
+import CustomerAutoSuggestField from './customerAutoSuggestField';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { requestCustomerNames } from "../actions";
 
-export class OrderForm extends React.Component {
+class OrderForm extends React.Component {
+componentDidMount() {
+  this.props.requestCustomerNames();
+  }
+
  render() {
      return(
        <div className="container-fluid">
@@ -12,6 +20,16 @@ export class OrderForm extends React.Component {
 
         <div className="container-fluid">
           <Form>
+          <p>To create a new order, select an exisiting customer or create a new one.</p>
+            <FormGroup row>
+              <Col sm ="8">
+                <CustomerAutoSuggestField customer = { this.props.customer }/>
+              </Col>
+              <Col sm="1">or</Col>
+              <Col sm="3">
+                <Button size="sm" color="primary" className="float-right">Create New Customer</Button>
+              </Col>             
+            </FormGroup>
             <div className="row-sm">Product Details :</div>
             <FormGroup row size="sm">
               <Col sm="2">
@@ -67,3 +85,10 @@ export class OrderForm extends React.Component {
      );
  }
 }
+
+const mapStateToProps = state => ({ customer: state.customer });
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ requestCustomerNames }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderForm);

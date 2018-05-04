@@ -9,7 +9,6 @@ export class CustomerForm extends React.Component {
         <h5>Create a New Customer</h5>
         <hr/>
         </div>
-
         <div className="container-fluid">
           <Form>
             <div className="row-sm">Personal Details :</div>
